@@ -48,12 +48,7 @@ import {
   MdOutlineVerifiedUser,
 } from "react-icons/md";
 
-import {
-  ItemType,
-  ProductType,
-  CategoryType,
-  TrendingProductsType,
-} from "@/type.d";
+import { ItemType, ProductType, CategoryType } from "@/type.d";
 
 import { AppContext } from "./Context/appContext";
 import arrow_up from "../assets/icons/arrow-up.svg";
