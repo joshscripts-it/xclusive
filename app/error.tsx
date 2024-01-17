@@ -11,7 +11,7 @@ export default function Error({ error, reset }: ErrorType) {
       <div>
         <h2 className="text-4xl font-bold text-center">Whoops!</h2>
         <p className="text-lg mt-2 text-center">Something Went Wrong!</p>
-        <p className="text-sm font-light px-8 mt-2 text-center">
+        <p className="text-sm font-medium text-red-500 px-8 mt-2 text-center">
           {error.message}
         </p>
       </div>

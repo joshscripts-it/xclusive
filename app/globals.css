@@ -55,8 +55,8 @@
   transition: all 200ms linear;
 }
 .embla__dot--selected {
-  width: 1rem;
-  height: 1rem;
+  width: 0.8rem;
+  height: 0.8rem;
 }
 .embla__dot--selected:after {
   background: rgb(236, 2, 2);

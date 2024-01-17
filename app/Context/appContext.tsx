@@ -8,6 +8,7 @@ import {
   Cart,
   Bestselling,
   Wishlist,
+  AllProducts,
 } from "@/data/dummyData";
 
 import {
@@ -15,7 +16,6 @@ import {
   ItemType,
   LoginType,
   ProductType,
-  TrendingProductsType,
   UserType,
 } from "@/type.d";
 
@@ -34,9 +34,7 @@ export const AppContextProvider = (props: any) => {
 
   const [shopList, setShoplist] = useState<ItemType[]>([...Shoplist]);
 
-  const [products, setProducts] = useState<TrendingProductsType[]>([
-    ...Products,
-  ]);
+  const [products, setProducts] = useState<ProductType[]>([...AllProducts]);
 
   const [wishList, setWishList] = useState<ProductType[]>([...Wishlist]);
 
