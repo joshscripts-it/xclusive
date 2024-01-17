@@ -284,15 +284,15 @@ const ShowcaseComponent = () => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, []);
 
-  useMemo(() => {
-    if (!emblaApi) return;
+  // useMemo(() => {
+  //   if (!emblaApi) return;
 
-    onInit(emblaApi);
-    onSelect(emblaApi);
-    emblaApi.on("reInit", onInit);
-    emblaApi.on("reInit", onSelect);
-    emblaApi.on("select", onSelect);
-  }, [emblaApi, onInit, onSelect]);
+  //   onInit(emblaApi);
+  //   onSelect(emblaApi);
+  //   emblaApi.on("reInit", onInit);
+  //   emblaApi.on("reInit", onSelect);
+  //   emblaApi.on("select", onSelect);
+  // }, [emblaApi, onInit, onSelect]);
 
   return (
     <div className="flex justify-around items-stretch lg:px-4 space-x-4 mb-1 mt-2 relative">
@@ -508,7 +508,7 @@ const FlashSalesComponent = ({
 
       {/* Heading  */}
       <div className="flex px-4 justify-between items-center space-x-6">
-        <h2 className="text-gray-600 font-semibold text-xl md:text-2xl lg:text-4xl">
+        <h2 className="text-gray-700 text-lg font-semibold lg:text-2xl">
           FLASH SALES
         </h2>
         <Countdown
@@ -1121,12 +1121,10 @@ export default function Home() {
       <div className="flex flex-col justify-between items-center space-y-16 divide-y divide-slate-200">
         <FlashSalesComponent shopList={shopList} isSeen={isSeen} />
         <BrowseByCategoryComponent categories={Categories} />
-
         <BestSellingComponent isSeen={isSeen} bestSelling={bestSelling} />
       </div>
       <BannerComponent />
       <ProductsComponent products={products} isSeen={isSeen} />
-
       {/* Featured */}
       <NewArrivalComponent
         scrollToTop={scrollToTop}
