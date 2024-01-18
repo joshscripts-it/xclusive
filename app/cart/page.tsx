@@ -48,7 +48,7 @@ export default function Page() {
                 >
                   <div className="basis-1/4 flex items-center space-x-2">
                     <Image
-                      src={item.image}
+                      src={item.images[0]}
                       className="w-1/3 h-1/3 lg:w-20 lg:h-20"
                       alt={`${item.name} image`}
                     />

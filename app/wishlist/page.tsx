@@ -50,7 +50,7 @@ export default function Page() {
               >
                 <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-52 lg:h-52 bg-gray-100 rounded-sm flex items-center justify-center">
                   <Image
-                    src={item.image}
+                    src={item.images[0]}
                     alt={item.name}
                     className="w-2/5 h-2/5"
                     priority={true}
