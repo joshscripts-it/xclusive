@@ -61,7 +61,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
   const isMatch = AllProducts.filter((product) => product.ID == id);
 
   const images: string[] = [];
-  isMatch[0]?.images?.forEach((img) => images.push(img));
+  isMatch[0]?.images?.forEach((img: any) => images.push(img));
 
   const imageByIndex = (index: number): string => images[index % images.length];
 
@@ -89,7 +89,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
         <div className="basis-full md:basis-2/3 lg:basis-2/3 relative">
           <div className="embla h-44" ref={emblaMainRef}>
             <div className="embla__container">
-              {isMatch[0]?.images?.map((image, id) => (
+              {isMatch[0]?.images?.map((image: any, id: number) => (
                 <div className="embla__slide" key={id}>
                   <Image
                     priority={true}
