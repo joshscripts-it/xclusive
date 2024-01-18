@@ -496,7 +496,7 @@ const FlashSalesComponent = ({
         <div className="flex items-center space-x-2">
           <div className="h-7 w-3 bg-red-600 rounded-sm" />
           <h4 className="text-red-600 text-sm lg:text-base font-semibold">
-            Today's
+            Today&apos;s
           </h4>
         </div>
       </div>
