@@ -960,7 +960,7 @@ const NewArrivalComponent = ({
           <div className="flex-1 flex items-end bg-womenCollection bg-black bg-right bg-contain bg-no-repeat p-6">
             <div className="space-y-3">
               <h2 className="text-gray-200 text-lg font-medium md:text-2xl">
-                Women's Collections
+                Women&apos;s Collections
               </h2>
               <p className="text-gray-300 text-sm lg:text-base">
                 Featured woman collections that give you another vibe.
