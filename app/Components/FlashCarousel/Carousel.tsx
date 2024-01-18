@@ -26,7 +26,7 @@ const Carousel: React.FC<PropType> = ({ shopList, isSeen }: any) => {
               <div className="flex flex-col space-y-2 relative">
                 <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-52 lg:h-52 bg-gray-100 rounded-sm flex items-center justify-center">
                   <button className="absolute left-4 top-4 rounded-md p-1 bg-red-600 text-xs text-gray-50">
-                    - {item.perc_discount}%
+                    - {item.discount}%
                   </button>
                   <Image
                     src={item.image}
