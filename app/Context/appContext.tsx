@@ -32,7 +32,7 @@ export const AppContextProvider = (props: any) => {
     ...Bestselling,
   ]);
 
-  const [shopList, setShoplist] = useState<ItemType[]>([...Shoplist]);
+  const [shopList, setShoplist] = useState<ProductType[]>([...Shoplist]);
 
   const [products, setProducts] = useState<ProductType[]>([...AllProducts]);
 
