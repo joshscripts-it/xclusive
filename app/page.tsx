@@ -675,7 +675,7 @@ const BestSellingComponent = ({
         </Button>
       </CardBody>
 
-      <CardFooter as={Link} href={item.path}>
+      <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
         <div className="flex flex-col space-y-4">
           <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
           <div className="flex space-x-2">
