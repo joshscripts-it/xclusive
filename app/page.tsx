@@ -52,7 +52,7 @@ import { ItemType, ProductType, CategoryType } from "@/type.d";
 
 import { AppContext } from "./Context/appContext";
 import arrow_up from "../assets/icons/arrow-up.svg";
-import { DotButton } from "./Components/dotbutton";
+import { EmblaDots } from "./Components/emblaDots";
 import {
   Button,
   Card,
@@ -261,16 +261,6 @@ const ShowcaseComponent = () => {
     [emblaApi]
   );
 
-  //@ARROW NAVIGATION
-  // const scrollPrev = useCallback(
-  //   () => emblaApi && emblaApi.scrollPrev(),
-  //   [emblaApi]
-  // );
-  // const scrollNext = useCallback(
-  //   () => emblaApi && emblaApi.scrollNext(),
-  //   [emblaApi]
-  // );
-
   const onInit = useCallback((emblaApi: any) => {
     setScrollSnaps(emblaApi.scrollSnapList());
   }, []);
@@ -279,15 +269,15 @@ const ShowcaseComponent = () => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, []);
 
-  // useMemo(() => {
-  //   if (!emblaApi) return;
+  useMemo(() => {
+    if (!emblaApi) return;
 
-  //   onInit(emblaApi);
-  //   onSelect(emblaApi);
-  //   emblaApi.on("reInit", onInit);
-  //   emblaApi.on("reInit", onSelect);
-  //   emblaApi.on("select", onSelect);
-  // }, [emblaApi, onInit, onSelect]);
+    onInit(emblaApi);
+    onSelect(emblaApi);
+    emblaApi.on("reInit", onInit);
+    emblaApi.on("reInit", onSelect);
+    emblaApi.on("select", onSelect);
+  }, [emblaApi, onInit, onSelect]);
 
   return (
     <div className="flex justify-around items-stretch lg:px-4 space-x-4 mb-1 mt-2 relative">
@@ -324,16 +314,16 @@ const ShowcaseComponent = () => {
                         <span className="text-gray-400 ">iphone 14 series</span>
                       </div>
                       <div>
-                        <h4 className="text-gray-200 font-semibold text-2xl md:text-4xl lg:text-5xl">
+                        <h4 className="text-gray-200 leading-7 font-semibold text-2xl md:text-4xl lg:text-5xl">
                           Up to 10%
                         </h4>
-                        <h4 className="text-gray-200 font-semibold text-2xl md:text-4xl lg:text-5xl">
+                        <h4 className="text-gray-200 leading-8 font-semibold text-2xl md:text-4xl lg:text-5xl">
                           off Voucher
                         </h4>
                       </div>
                       <Link
                         href="/shop/now"
-                        className="flex items-center text-base justify-start text-gray-300 font-medium underline"
+                        className="flex font-medium items-center text-base justify-start text-gray-200 underline"
                       >
                         Shop Now
                         <Image
@@ -348,8 +338,10 @@ const ShowcaseComponent = () => {
                     <Image
                       src={showcaseImage}
                       className="w-3/5 h-4/5"
-                      alt="showcase"
+                      alt="showcase banner"
                       priority={true}
+                      // width={496}
+                      // height={352}
                     />
                   </div>
                 </div>
@@ -359,7 +351,7 @@ const ShowcaseComponent = () => {
         </div>
         <div className="embla__dots">
           {scrollSnaps.map((_, index) => (
-            <DotButton
+            <EmblaDots
               key={index}
               onClick={() => scrollTo(index)}
               className={"embla__dot bg-gray-500".concat(
@@ -381,112 +373,118 @@ const FlashSalesComponent = ({
   isSeen: React.ReactNode;
 }) => {
   //CAROUSEL
-  // const [selectedIndex, setSelectedIndex] = useState(0);
-  // const [scrollSnaps, setScrollSnaps] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState([]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 10000 }),
   ]);
 
-  // const scrollTo = useCallback(
-  //   (index: any) => emblaApi && emblaApi.scrollTo(index),
-  //   [emblaApi]
-  // );
-
-  //@EMBLA_ARROW_NAVIGATION
-  // const scrollPrev = useCallback(
-  //   () => emblaApi && emblaApi.scrollPrev(),
-  //   [emblaApi]
-  // );
-  // const scrollNext = useCallback(
-  //   () => emblaApi && emblaApi.scrollNext(),
-  //   [emblaApi]
-  // );
-
-  // const onInit = useCallback((emblaApi: any) => {
-  //   setScrollSnaps(emblaApi.scrollSnapList());
-  // }, []);
-
-  // const onSelect = useCallback((emblaApi: any) => {
-  //   setSelectedIndex(emblaApi.selectedScrollSnap());
-  // }, []);
-
-  const FlashItem = ({ item }: { item: ItemType }) => (
-    //@FlashItem
-    <Card
-      shadow="none"
-      className="p-0 max-w-sm  h-auto relative"
-      // isPressable
-    >
-      <CardBody className="p-0 bg-gray-200 h-40 relative rounded-b-lg">
-        <div className="relative w-full h-full py-6 flex items-center justify-center">
-          {item?.discount && (
-            <Button
-              size="sm"
-              variant="faded"
-              radius="sm"
-              className="absolute border-none left-4 top-4 w-4 bg-red-600 text-xs text-gray-50"
-            >
-              - {item.discount}%
-            </Button>
-          )}
-
-          <Image
-            src={item.image}
-            alt={item.name}
-            className="max-w-sm w-auto h-3/5"
-            priority={true}
-          />
-          <div className="absolute top-4 right-2 flex flex-col space-y-1">
-            <Button
-              isIconOnly
-              size="sm"
-              variant="solid"
-              className="bg-gray-50 border-none"
-              radius="full"
-            >
-              <IoHeartOutline className="w-5 h-5 text-gray-700" />
-            </Button>
-            <Button
-              radius="full"
-              isIconOnly
-              variant="solid"
-              size="sm"
-              className="bg-gray-50 border-none"
-            >
-              {isSeen}
-            </Button>
-          </div>
-        </div>
-        <Button className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800">
-          Add To Cart
-        </Button>
-      </CardBody>
-
-      <CardFooter as={Link} href={item.path}>
-        <div className="flex flex-col space-y-4">
-          <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
-          <div className="flex space-x-2">
-            <h4 className="text-base font-medium text-red-500 ">
-              $ {item.amount}
-            </h4>
-            {item?.discount && (
-              <h4 className="text-base font-medium text-gray-400 line-through">
-                $ {item.discount}
-              </h4>
-            )}
-          </div>
-
-          <span className="flex space-x-1">
-            {item.rating &&
-              Array.from(Array(Math.floor(item.rating))).map((id) => (
-                <IoStar className="text-yellow-500" key={item.ID} />
-              ))}
-          </span>
-        </div>
-      </CardFooter>
-    </Card>
+  const scrollTo = useCallback(
+    (index: any) => emblaApi && emblaApi.scrollTo(index),
+    [emblaApi]
   );
+
+  // @EMBLA_ARROW_NAVIGATION
+  const scrollPrev = useCallback(
+    () => emblaApi && emblaApi.scrollPrev(),
+    [emblaApi]
+  );
+  const scrollNext = useCallback(
+    () => emblaApi && emblaApi.scrollNext(),
+    [emblaApi]
+  );
+
+  const onInit = useCallback((emblaApi: any) => {
+    setScrollSnaps(emblaApi.scrollSnapList());
+  }, []);
+
+  const onSelect = useCallback((emblaApi: any) => {
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, []);
+
+  const FlashItem = ({ item }: { item: ProductType }) => {
+    console.log(item);
+    return (
+      //@FlashItem
+      <Card
+        shadow="none"
+        className="p-0 max-w-sm  h-auto relative"
+        // isPressable
+      >
+        <CardBody className="p-0 bg-gray-200 h-40 relative rounded-b-lg">
+          <div className="relative w-full h-full py-6 flex items-center justify-center">
+            {item?.discount && (
+              <Button
+                size="sm"
+                variant="faded"
+                radius="sm"
+                className="absolute border-none left-4 top-4 w-4 bg-red-600 text-xs text-gray-50"
+              >
+                - {item.discount}%
+              </Button>
+            )}
+
+            <Image
+              src={item.images[0]}
+              alt={item.name}
+              className="max-w-sm w-auto h-3/5"
+              priority={true}
+            />
+            <div className="absolute top-4 right-2 flex flex-col space-y-1">
+              <Button
+                isIconOnly
+                size="sm"
+                variant="solid"
+                className="bg-gray-50 border-none"
+                radius="full"
+              >
+                <IoHeartOutline className="w-5 h-5 text-gray-700" />
+              </Button>
+              <Button
+                radius="full"
+                isIconOnly
+                variant="solid"
+                size="sm"
+                className="bg-gray-50 border-none"
+              >
+                {isSeen}
+              </Button>
+            </div>
+          </div>
+          <Button
+            disableRipple
+            className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+          >
+            Add To Cart
+          </Button>
+        </CardBody>
+
+        <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
+          <div className="flex flex-col space-y-4">
+            <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
+            <div className="flex space-x-2">
+              <h4 className="text-base font-medium text-red-500 ">
+                $ {item.amount}
+              </h4>
+              {item?.discount && (
+                <h4 className="text-base font-medium text-gray-400 line-through">
+                  $ {item.discount}
+                </h4>
+              )}
+            </div>
+
+            <span className="flex space-x-1">
+              {item.rating &&
+                Array.from(Array(Math.floor(item.rating))).map((id) => (
+                  <IoStar className="text-yellow-500" key={item.ID} />
+                ))}
+            </span>
+          </div>
+        </CardFooter>
+      </Card>
+    );
+  };
 
   return (
     <div className="w-full flex flex-col justify-center space-y-4  mx-auto pt-4">
@@ -831,7 +829,7 @@ const ProductsComponent = ({
         </Button>
       </CardBody>
 
-      <CardFooter as={Link} href={item.path}>
+      <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
         <div className="flex flex-col space-y-4">
           <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
           <div className="flex space-x-2">
@@ -1061,6 +1059,7 @@ const NewArrivalComponent = ({
     </div>
   );
 };
+
 /*=============================
         INDEX PAGE
 ===============================*/

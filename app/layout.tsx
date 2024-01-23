@@ -9,7 +9,7 @@ import { Providers } from "./Providers";
 // const raleway = Raleway({ subsets: ["latin"] });
 const poppins = Poppins({
   subsets: ["devanagari"],
-  weight: ["200", "400", "500", "700", "900"],
+  weight: ["200", "400", "500", "600", "700", "800"],
 });
 
 export default function RootLayout({

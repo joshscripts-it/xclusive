@@ -1,14 +1,14 @@
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import { IoCallOutline, IoMailOutline } from "react-icons/io5";
 
 export default function Page() {
   return (
     <div className="container mx-auto mb-4 w-full h-auto p-8 space-y-8">
-      {/* Header */}
-      <header className="flex justify-between items-center">
-        <h4 className="text-xs md:text-sm text-gray-400">
-          / <span className="text-gray-500 font-medium">Contact</span>
-        </h4>
-      </header>
+      {/* Breadcrumbs */}
+      <Breadcrumbs separator={"/"}>
+        <BreadcrumbItem>/Contact</BreadcrumbItem>
+        <BreadcrumbItem>/</BreadcrumbItem>
+      </Breadcrumbs>
 
       <div className="flex items-start  justify-between space-x-4 lg:space-x-6">
         <div className="flex flex-col w-5/12 md:w-4/12 lg:w-3/12 items-start justify-center shadow-md p-6 space-y-16 divide-y divide-gray-400">

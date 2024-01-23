@@ -117,14 +117,14 @@ export default function Page() {
           </button>
         </header>
         <div className="flex space-x-6 items-center mb-6 overflow-x-auto">
-          {shopList.map((item: ItemType) => (
+          {shopList.map((item: ProductType) => (
             <div
               key={item.ID}
               className={`relative flex flex-col space-y-2 ml-4`}
             >
               <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-52 lg:h-52 bg-gray-100 rounded-sm flex items-center justify-center">
                 <Image
-                  src={item.image}
+                  src={item.images[0]}
                   alt={item.name}
                   className="w-2/5 h-2/5"
                 />

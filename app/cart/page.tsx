@@ -6,6 +6,7 @@ import { ProductType } from "@/type.d";
 import Image from "next/image";
 import { IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
 import Link from "next/link";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 export default function Page() {
   const { cart } = useContext(AppContext);
@@ -17,11 +18,10 @@ export default function Page() {
   return (
     <div className="container mx-auto my-4  w-full h-auto p-8 space-y-8">
       {/* Breadcrumb */}
-      <header className="flex justify-between items-center">
-        <h4 className="font-medium text-gray-400 text-xs md:text-sm">
-          Home / <span className="text-gray-500">Cart</span>
-        </h4>
-      </header>
+      <Breadcrumbs separator={"/"}>
+        <BreadcrumbItem>/Home</BreadcrumbItem>
+        <BreadcrumbItem>carts</BreadcrumbItem>
+      </Breadcrumbs>
 
       <div>
         <div className="space-y-8">

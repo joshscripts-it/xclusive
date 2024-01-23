@@ -2,7 +2,7 @@
 
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import { ItemType, PageProps } from "@/type.d";
+import { ItemType, PageProps, ProductType } from "@/type.d";
 import { AllProducts } from "@/data/dummyData";
 import Image from "next/image";
 import {
@@ -23,6 +23,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { AppContext } from "@/app/Context/appContext";
 
 import { Thumb } from "@/app/Components/carouselThumbs";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 export default function ProductDetails({ params: { id } }: PageProps) {
   //INTERNAL STATE
@@ -76,13 +77,11 @@ export default function ProductDetails({ params: { id } }: PageProps) {
 
   return (
     <div className="container mx-auto mb-4 w-full h-auto p-8 space-y-8">
-      {/* Header */}
-      <header className="flex justify-between items-center">
-        <h4 className="text-xs md:text-sm text-gray-400">
-          / products/
-          <span className="text-gray-500 font-medium">{isMatch[0]?.name}</span>
-        </h4>
-      </header>
+      {/* Breadcrumbs */}
+      <Breadcrumbs separator={"/"}>
+        <BreadcrumbItem>/Product</BreadcrumbItem>
+        {isMatch.length && <BreadcrumbItem>{isMatch[0].name}</BreadcrumbItem>}
+      </Breadcrumbs>
 
       <div className="flex items-center justify-center flex-wrap md:flex-nowrap lg:flex-nowrap">
         {/* Main */}
@@ -230,14 +229,14 @@ export default function ProductDetails({ params: { id } }: PageProps) {
         </div>
 
         <div className="flex space-x-6 items-stretch overflow-x-auto px-2">
-          {shopList.map((item: ItemType) => (
+          {shopList.map((item: ProductType) => (
             <div key={item.ID} className={`relative flex flex-col space-y-2`}>
               <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-52 lg:h-52 bg-gray-100 rounded-sm flex items-center justify-center">
                 <button className="absolute left-4 top-4 rounded-md p-1 bg-red-600 text-xs text-gray-50">
                   - {item.discount}%
                 </button>
                 <Image
-                  src={item.image}
+                  src={item.images[0]}
                   alt={item.name}
                   className="w-2/5 h-2/5"
                   priority={true}

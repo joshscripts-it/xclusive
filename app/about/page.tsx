@@ -18,16 +18,16 @@ import {
   MdOutlineShoppingBag,
   MdOutlineVerifiedUser,
 } from "react-icons/md";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 export default function Page() {
   return (
     <div className="container mx-auto my-4  w-full h-auto p-8 space-y-12 lg:space-y-20">
-      {/* Header */}
-      <header className="flex justify-between items-center">
-        <h4 className="text-sm text-light text-gray-400  ">
-          / <span className="text-gray-500 font-medium">About</span>
-        </h4>
-      </header>
+      {/* Breadcrumbs */}
+      <Breadcrumbs separator={"/"}>
+        <BreadcrumbItem>/Contact</BreadcrumbItem>
+        <BreadcrumbItem>/</BreadcrumbItem>
+      </Breadcrumbs>
 
       <div className="flex justify-between items-center flex-wrap-reverse md:flex-nowrap">
         <div className="basis-full md:basis-2/5 space-y-4">

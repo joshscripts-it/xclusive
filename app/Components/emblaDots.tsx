@@ -1,4 +1,4 @@
-export const DotButton = (props: any) => {
+export const EmblaDots = (props: any) => {
   const { children, ...restProps } = props;
 
   return (
