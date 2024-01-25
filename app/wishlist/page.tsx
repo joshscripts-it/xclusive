@@ -8,10 +8,108 @@ import {
   IoCartOutline,
   IoEyeOffOutline,
   IoEyeOutline,
+  IoHeartOutline,
   IoStar,
   IoTrashOutline,
 } from "react-icons/io5";
 import { ItemType, ProductType } from "@/type.d";
+import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
+
+const JustForYouComponent = ({
+  item,
+  isSeen,
+}: {
+  item: ProductType;
+  isSeen: React.ReactNode;
+}) => {
+  return (
+    //@FlashItem
+    <Card
+      id="card"
+      shadow="none"
+      style={{ maxWidth: 350, minWidth: 200, width: 350 }}
+    >
+      <CardBody
+        className="p-0 bg-gray-200 relative rounded-b-lg overflow-hidden w-full"
+        style={{ height: 250, minHeight: 250, maxHeight: 250 }}
+      >
+        <div className="relative w-full h-60 py-6 flex items-center justify-center">
+          {item?.discount && (
+            <Button
+              disableAnimation
+              size="sm"
+              variant="faded"
+              radius="sm"
+              className="absolute border-none left-4 top-4 bg-red-600 text-xs text-gray-50"
+              style={{ width: 40, height: 26 }}
+            >
+              - {item.discount}%
+            </Button>
+          )}
+
+          <Image
+            src={item.images[0]}
+            alt={item.name}
+            className="max-w-sm w-auto h-3/5"
+            priority={true}
+          />
+          <div className="absolute top-4 right-2 flex flex-col space-y-1">
+            <Button
+              disableAnimation
+              isIconOnly
+              size="sm"
+              variant="solid"
+              className="bg-gray-50 border-none"
+              radius="full"
+            >
+              <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+            </Button>
+            <Button
+              disableAnimation
+              radius="full"
+              isIconOnly
+              variant="solid"
+              size="sm"
+              className="bg-gray-50 border-none"
+            >
+              {isSeen}
+            </Button>
+          </div>
+        </div>
+        <Button
+          disableAnimation
+          variant="flat"
+          className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+        >
+          Add To Cart
+        </Button>
+      </CardBody>
+
+      <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
+        <div className="flex flex-col space-y-2">
+          <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
+          <div className="flex space-x-2">
+            <h4 className="text-base font-medium text-red-500 ">
+              $ {item.amount}
+            </h4>
+            {item?.discount && (
+              <h4 className="text-base font-medium text-gray-400 line-through">
+                $ {item.discount}
+              </h4>
+            )}
+          </div>
+
+          <span className="flex space-x-1">
+            {item.rating &&
+              Array.from(Array(Math.floor(item.rating))).map((id) => (
+                <IoStar className="text-yellow-500" key={item.ID} />
+              ))}
+          </span>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
 
 export default function Page() {
   // App Internal State
@@ -20,9 +118,9 @@ export default function Page() {
   const { shopList, setCart, cart, wishList } = useContext(AppContext);
 
   const isSeen = visible ? (
-    <IoEyeOutline className="w-5 h-5 lg:w-6 lg:h-6 text-gray-700" />
+    <IoEyeOutline className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6 text-gray-700" />
   ) : (
-    <IoEyeOffOutline className="w-5 h-5 lg:w-6 lg:h-6 text-gray-700" />
+    <IoEyeOffOutline className="w-3 h-3  sm:w-4 sm:h-4 lg:w-6 lg:h-6 text-gray-700" />
   );
 
   return (
@@ -32,7 +130,7 @@ export default function Page() {
         {/* Header */}
         <header className="flex justify-between items-center">
           <h4 className="text-base font-medium text-gray-600 d:text-base lg:text-lg">
-            wishlist {wishList?.length && `(${wishList.length})`}
+            Wishlist {wishList?.length && `(${wishList.length})`}
           </h4>
           {wishList?.length && (
             <button className="flex items-center justify-center w-auto px-4 md:px-6 py-2 border border-gray-500 text-center text-gray-600 text-xs font-medium md:text-base lg:text-md">
@@ -44,55 +142,7 @@ export default function Page() {
         {wishList?.length ? (
           <div className="flex space-x-6 items-center mb-6 overflow-x-auto">
             {wishList.map((item: ProductType) => (
-              <div
-                key={item.ID}
-                className={`relative flex flex-col space-y-2 ml-4 z-30`}
-              >
-                <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-52 lg:h-52 bg-gray-100 rounded-sm flex items-center justify-center">
-                  <Image
-                    src={item.images[0]}
-                    alt={item.name}
-                    className="w-2/5 h-2/5"
-                    priority={true}
-                  />
-                  <div className="absolute z-50 top-4 right-2 flex flex-col space-y-4">
-                    <button className="bg-gray-100">
-                      <IoTrashOutline className="w-5 h-5 text-gray-700" />
-                    </button>
-                  </div>
-
-                  <button
-                    className="absolute w-full text-sm font-medium flex items-center justify-center bottom-0 z-50 text-center text-gray-100 self-end p-2 bg-gray-800"
-
-                    // onClick={() => setCart(cart?.length)}
-                  >
-                    <IoCartOutline className="w-5 h-5 lg:w-6 lg:h-6 text-gray-200 mr-2 text-sm lg:text-base" />
-                    Add To Cart
-                  </button>
-                </div>
-                <Link
-                  href={`${item.path}/${item.ID}`}
-                  className="space-y-2 mb-4"
-                >
-                  <h4 className="text-gray-700 text-sm lg:text-base font-medium">
-                    {item.name}
-                  </h4>
-
-                  <h4 className="space-x-3 font-medium text-sm">
-                    <span className="text-red-500">${item.amount}</span>
-                    <span className="text-gray-400 line-through">
-                      ${item.prevAmount}
-                    </span>
-                  </h4>
-
-                  <span className="flex space-x-1">
-                    {item.rating &&
-                      Array.from(Array(Math.floor(item.rating))).map((id) => (
-                        <IoStar className="text-yellow-500" key={id} />
-                      ))}
-                  </span>
-                </Link>
-              </div>
+              <JustForYouComponent isSeen={isSeen} item={item} key={item.ID} />
             ))}
           </div>
         ) : (
@@ -116,56 +166,9 @@ export default function Page() {
             See All
           </button>
         </header>
-        <div className="flex space-x-6 items-center mb-6 overflow-x-auto">
+        <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto">
           {shopList.map((item: ProductType) => (
-            <div
-              key={item.ID}
-              className={`relative flex flex-col space-y-2 ml-4`}
-            >
-              <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-52 lg:h-52 bg-gray-100 rounded-sm flex items-center justify-center">
-                <Image
-                  src={item.images[0]}
-                  alt={item.name}
-                  className="w-2/5 h-2/5"
-                />
-                <div className="absolute z-50 top-4 right-2 flex flex-col space-y-4">
-                  <button
-                    className="bg-gray-100"
-                    onClick={() => alert("Seen!")}
-                  >
-                    {isSeen}
-                  </button>
-                </div>
-
-                <button
-                  className="absolute w-full text-sm  font-medium flex items-center justify-center bottom-0 z-50 text-center text-gray-100 self-end p-2 bg-gray-800"
-
-                  // onClick={() => setCart(cart + 1)}
-                >
-                  <IoCartOutline className="w-5 h-5 lg:w-6 lg:h-6 text-gray-200 mr-2" />
-                  Add To Cart
-                </button>
-              </div>
-              <Link href={`${item.path}/${item.ID}`} className="space-y-2 mb-4">
-                <h4 className="text-gray-700 text-sm lg:text-base font-medium">
-                  {item.name}
-                </h4>
-
-                <h4 className="space-x-3 font-medium text-sm">
-                  <span className="text-red-500">${item.amount}</span>
-                  <span className="text-gray-400 line-through">
-                    ${item.prevAmount}
-                  </span>
-                </h4>
-
-                <span className="flex space-x-1">
-                  {item.rating &&
-                    Array.from(Array(Math.floor(item.rating))).map((id) => (
-                      <IoStar className="text-yellow-500" key={id} />
-                    ))}
-                </span>
-              </Link>
-            </div>
+            <JustForYouComponent isSeen={isSeen} item={item} key={item.ID} />
           ))}
         </div>
       </div>

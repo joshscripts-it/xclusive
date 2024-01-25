@@ -165,7 +165,10 @@ const FlashCountdownComponent = ({
   seconds /*completed*/,
 }: any) => {
   return (
-    <div className="flex items-center justify-between space-x-3 md:space-x-6">
+    <div className="flex items-end justify-start space-x-3 sm:space-x-6 flex-1">
+      <h2 className="text-gray-700 text-md font-semibold lg:text-2xl">
+        FLASH SALES
+      </h2>
       <div className="flex flex-col items-center justify-center space-y-2">
         <span className="text-gray-700 font-medium text-xs">DAYS</span>
         <h2 className="text-gray-700 font-bold text-xl md:text-2xl lg:text-4xl">
@@ -404,22 +407,26 @@ const FlashSalesComponent = ({
   }, []);
 
   const FlashItem = ({ item }: { item: ProductType }) => {
-    console.log(item);
     return (
       //@FlashItem
       <Card
+        id="card"
         shadow="none"
-        className="p-0 max-w-sm  h-auto relative"
-        // isPressable
+        style={{ maxWidth: 350, minWidth: 200, width: 350 }}
       >
-        <CardBody className="p-0 bg-gray-200 h-40 relative rounded-b-lg">
-          <div className="relative w-full h-full py-6 flex items-center justify-center">
+        <CardBody
+          className="p-0 bg-gray-200 relative rounded-b-lg overflow-hidden w-full"
+          style={{ height: 250, minHeight: 250, maxHeight: 250 }}
+        >
+          <div className="relative w-full h-60 py-6 flex items-center justify-center">
             {item?.discount && (
               <Button
+                disableAnimation
                 size="sm"
                 variant="faded"
                 radius="sm"
-                className="absolute border-none left-4 top-4 w-4 bg-red-600 text-xs text-gray-50"
+                className="absolute border-none left-4 top-4 bg-red-600 text-xs text-gray-50"
+                style={{ width: 40, height: 26 }}
               >
                 - {item.discount}%
               </Button>
@@ -433,15 +440,17 @@ const FlashSalesComponent = ({
             />
             <div className="absolute top-4 right-2 flex flex-col space-y-1">
               <Button
+                disableAnimation
                 isIconOnly
                 size="sm"
                 variant="solid"
                 className="bg-gray-50 border-none"
                 radius="full"
               >
-                <IoHeartOutline className="w-5 h-5 text-gray-700" />
+                <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
               </Button>
               <Button
+                disableAnimation
                 radius="full"
                 isIconOnly
                 variant="solid"
@@ -453,7 +462,8 @@ const FlashSalesComponent = ({
             </div>
           </div>
           <Button
-            disableRipple
+            disableAnimation
+            variant="flat"
             className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
           >
             Add To Cart
@@ -461,7 +471,7 @@ const FlashSalesComponent = ({
         </CardBody>
 
         <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-2">
             <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
             <div className="flex space-x-2">
               <h4 className="text-base font-medium text-red-500 ">
@@ -487,7 +497,7 @@ const FlashSalesComponent = ({
   };
 
   return (
-    <div className="w-full flex flex-col justify-center space-y-4  mx-auto pt-4">
+    <div className="w-full flex flex-col justify-center space-y-4 pt-4">
       {/* Today Sale */}
       <div className="ml-4">
         {/* Bullet  */}
@@ -501,16 +511,14 @@ const FlashSalesComponent = ({
 
       {/* Heading  */}
       <div className="flex px-4 justify-between items-center space-x-6">
-        <h2 className="text-gray-700 text-lg font-semibold lg:text-2xl">
-          FLASH SALES
-        </h2>
         <Countdown
           renderer={FlashCountdownComponent}
           date={Date.now() + 331200000 /*4days */}
         />
 
-        <div className="flex space-x-2 basis-2/5 items-center justify-end">
+        <div className="flex space-x-2 items-center justify-end">
           <Button
+            disableAnimation
             isIconOnly
             radius="full"
             size="sm"
@@ -519,22 +527,26 @@ const FlashSalesComponent = ({
           >
             <IoArrowBackOutline
               size={20}
-              className="text-gray-600 w-3 h-3 md:w-5 md:h-5"
+              className="text-gray-600 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5"
             />
           </Button>
           <Button
+            disableAnimation
             isIconOnly
             radius="full"
             size="sm"
             variant="faded"
             className="border-none"
           >
-            <IoArrowForwardOutline className="text-gray-600 w-3 h-3 md:w-5 md:h-5" />
+            <IoArrowForwardOutline className="text-gray-600 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
           </Button>
         </div>
       </div>
 
-      <div className="flex  relative space-x-6 items-stretch overflow-x-auto p-1 w-full">
+      <div
+        className="flex items-stretch
+      overflow-x-auto relative space-x-4  p-1 w-full"
+      >
         {/* <div className="embla">
           <div className="embla_container"> */}
         {shopList.map((item: ItemType, _) => (
@@ -544,7 +556,10 @@ const FlashSalesComponent = ({
         </div> */}
       </div>
 
-      <button className="self-center rounded w-56 bg-red-600 text-gray-100 text-base text-center p-2">
+      <button
+        disableAnimation
+        className="self-center rounded w-56 bg-red-600 text-gray-100 text-base text-center p-2"
+      >
         View All Products
       </button>
     </div>
@@ -574,22 +589,24 @@ const BrowseByCategoryComponent = ({
 
         <div className="flex basis-2/5 items-center justify-end">
           <Button
+            disableAnimation
             isIconOnly
             size="sm"
             variant="solid"
             className="bg-gray-50 border-none"
             radius="full"
           >
-            <IoArrowBackOutline className="text-gray-600 w-3 h-3 md:w-5 md:h-5" />
+            <IoArrowBackOutline className="text-gray-600 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
           </Button>
           <Button
+            disableAnimation
             isIconOnly
             size="sm"
             variant="solid"
             className="bg-gray-50 border-none"
             radius="full"
           >
-            <IoArrowForwardOutline className="text-gray-600 w-3 h-3 md:w-5 md:h-5" />
+            <IoArrowForwardOutline className="text-gray-600 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
           </Button>
         </div>
       </div>
@@ -610,9 +627,12 @@ const BrowseByCategoryComponent = ({
         ))}
       </div>
       <div />
-      <button className="self-center rounded w-56 bg-red-600 text-gray-100 text-base text-center p-2">
+      <Button
+        disableAnimation
+        className="self-center rounded w-56 bg-red-600 text-gray-100 text-base text-center p-2"
+      >
         View All Products
-      </button>
+      </Button>
     </div>
   );
 };
@@ -627,13 +647,17 @@ const BestSellingComponent = ({
   const RenderBestSellingItem = ({ item }: { item: ProductType }) => (
     <Card
       shadow="none"
-      className="p-0 max-w-sm  h-auto relative"
-      // isPressable
+      className="p-0 max-w-sm min-w-sm sm  h-auto relative"
+      style={{ maxWidth: 350, minWidth: 200, width: 350 }}
     >
-      <CardBody className="p-0 bg-gray-200 h-40 relative rounded-b-lg">
+      <CardBody
+        className="p-0 bg-gray-200 h-40 relative rounded-b-lg"
+        style={{ height: 250, minHeight: 250, maxHeight: 250 }}
+      >
         <div className="relative w-full h-full py-6 flex items-center justify-center">
           {item?.discount && (
             <Button
+              disableAnimation
               size="sm"
               variant="faded"
               radius="sm"
@@ -648,18 +672,21 @@ const BestSellingComponent = ({
             alt={item.name}
             className="max-w-sm w-auto h-3/5"
             priority={true}
+            objectFit="contain"
           />
           <div className="absolute top-4 right-2 flex flex-col space-y-1">
             <Button
+              disableAnimation
               isIconOnly
               size="sm"
               variant="solid"
               className="bg-gray-50 border-none"
               radius="full"
             >
-              <IoHeartOutline className="w-5 h-5 text-gray-700" />
+              <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
             </Button>
             <Button
+              disableAnimation
               radius="full"
               isIconOnly
               variant="solid"
@@ -670,7 +697,10 @@ const BestSellingComponent = ({
             </Button>
           </div>
         </div>
-        <Button className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800">
+        <Button
+          disableAnimation
+          className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+        >
           Add To Cart
         </Button>
       </CardBody>
@@ -695,9 +725,11 @@ const BestSellingComponent = ({
                   <IoStar className="text-yellow-500" key={item.ID} />
                 ))}
             </span>
-            <h4 className="text-base font-medium text-gray-400">
-              ({item.ratersCount})
-            </h4>
+            {item.ratersCount && (
+              <h4 className="text-base font-medium text-gray-400">
+                ({item.ratersCount})
+              </h4>
+            )}
           </div>
         </div>
       </CardFooter>
@@ -723,13 +755,16 @@ const BestSellingComponent = ({
           Best Selling Products
         </h2>
 
-        <button className="self-center rounded w-28 bg-red-600 text-gray-100 text-sm font-normal text-center p-2">
+        <Button
+          disableAnimation
+          className="self-center rounded w-28 bg-red-600 text-gray-100 text-sm font-normal text-center p-2"
+        >
           View All
-        </button>
+        </Button>
       </div>
 
       {/* items */}
-      <div className="flex space-x-6 items-center mb-6 overflow-x-auto px-2">
+      <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto px-2">
         {bestSelling.map((item: ProductType, _) => (
           <RenderBestSellingItem item={item} key={item.ID} />
         ))}
@@ -760,9 +795,12 @@ const BannerComponent = () => {
             date={Date.now() + 496800000 /*6days */}
           />
 
-          <button className="p-4 w-32 flex items-center justify-center h-10 bg-green-500 font-normal text-gray-100 text-sm md:text-lg rounded-sm">
+          <Button
+            disableAnimation
+            className="p-4 w-32 flex items-center justify-center h-10 bg-green-500 font-normal text-gray-100 text-sm md:text-lg rounded-sm"
+          >
             Buy Now!
-          </button>
+          </Button>
         </div>
 
         <Image src={jbl_boombox} alt="category image" className="w-1/3 h-2/3" />
@@ -781,13 +819,13 @@ const ProductsComponent = ({
   const ProductItem = ({ item }: { item: ProductType }) => (
     <Card
       shadow="none"
-      className="p-0 max-w-sm  h-auto relative"
-      // isPressable
+      className="p-0 max-w-sm min-w-sm w-auto h-auto relative"
     >
       <CardBody className="p-0 bg-gray-200 h-40 relative rounded-b-lg">
         <div className="relative w-full h-full py-6 flex items-center justify-center">
           {item?.isNew && (
             <Button
+              disableAnimation
               size="sm"
               variant="faded"
               radius="sm"
@@ -805,15 +843,17 @@ const ProductsComponent = ({
           />
           <div className="absolute top-4 right-2 flex flex-col space-y-1">
             <Button
+              disableAnimation
               isIconOnly
               size="sm"
               variant="solid"
               className="bg-gray-50 border-none"
               radius="full"
             >
-              <IoHeartOutline className="w-5 h-5 text-gray-700" />
+              <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
             </Button>
             <Button
+              disableAnimation
               radius="full"
               isIconOnly
               variant="solid"
@@ -824,13 +864,16 @@ const ProductsComponent = ({
             </Button>
           </div>
         </div>
-        <Button className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800">
+        <Button
+          disableAnimation
+          className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+        >
           Add To Cart
         </Button>
       </CardBody>
 
       <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-2">
           <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
           <div className="flex space-x-2">
             <h4 className="text-base font-medium text-red-500 ">
@@ -861,7 +904,7 @@ const ProductsComponent = ({
   );
 
   return (
-    <div className="space-y-4 px-4 border-b border-gray-200 pb-8">
+    <div className="space-y-4 w-full border-b border-gray-200 pb-8">
       <div className="w-full flex flex-col justify-center space-y-6 mx-auto">
         <div className="ml-4">
           {/* Bullet  */}
@@ -874,26 +917,40 @@ const ProductsComponent = ({
         </div>
 
         {/* Heading  */}
-        <div className="flex px-4 justify-between items-center space-x-6">
-          <h2 className="text-gray-700 text-lg font-semibold lg:text-2xl">
+        <div className="flex px-4justify-between items-center space-x-6">
+          <h2 className="text-gray-700 flex-1 text-lg font-semibold lg:text-2xl">
             Explore Our Products
           </h2>
 
-          <div className="flex basis-2/5 items-center justify-end">
-            <button className="bg-gray-200 rounded-lg mr-2 p-1">
+          <div className="flex space-x-2 items-center justify-end">
+            <Button
+              disableAnimation
+              isIconOnly
+              size="sm"
+              variant="solid"
+              className="bg-gray-50 border-none"
+              radius="full"
+            >
               <IoArrowBackOutline
                 size={20}
-                className="text-gray-600 w-3 h-3 md:w-5 md:h-5"
+                className="text-gray-600 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5"
               />
-            </button>
-            <button className="bg-gray-200 rounded-lg p-1">
-              <IoArrowForwardOutline className="text-gray-600 w-3 h-3 md:w-5 md:h-5" />
-            </button>
+            </Button>
+            <Button
+              disableAnimation
+              isIconOnly
+              size="sm"
+              variant="solid"
+              className="bg-gray-50 border-none"
+              radius="full"
+            >
+              <IoArrowForwardOutline className="text-gray-600 w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+            </Button>
           </div>
         </div>
 
         {/* items */}
-        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-4 mb-6">
+        <div className="w-full grid p-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-4 mb-6">
           {products.map((item: ProductType, _) => (
             <ProductItem item={item} key={item.ID} />
           ))}
@@ -1104,26 +1161,29 @@ export default function Home() {
   }); //end scroll-to-top
 
   const isSeen = visible ? (
-    <IoEyeOutline className="w-5 h-5 text-gray-700" />
+    <IoEyeOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
   ) : (
-    <IoEyeOffOutline className="w-5 h-5 text-gray-700" />
+    <IoEyeOffOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
   );
   return (
     <div className="min-w-full flex flex-col space-y-10">
       {/* Showcase  */}
       <ShowcaseComponent />
-      <div className="flex flex-col justify-between items-center space-y-16 divide-y divide-slate-200">
+      <div className="container mx-auto flex flex-col justify-between items-center space-y-16 divide-y divide-slate-200">
         <FlashSalesComponent shopList={shopList} isSeen={isSeen} />
+
         <BrowseByCategoryComponent categories={Categories} />
         <BestSellingComponent isSeen={isSeen} bestSelling={bestSelling} />
       </div>
-      <BannerComponent />
-      <ProductsComponent products={products} isSeen={isSeen} />
-      {/* Featured */}
-      <NewArrivalComponent
-        scrollToTop={scrollToTop}
-        scrollVisible={scrollVisible}
-      />
+      <div className="container mx-auto flex flex-col justify-between items-center">
+        <BannerComponent />
+        <ProductsComponent products={products} isSeen={isSeen} />
+        {/* Featured */}
+        <NewArrivalComponent
+          scrollToTop={scrollToTop}
+          scrollVisible={scrollVisible}
+        />
+      </div>
     </div>
   );
 }

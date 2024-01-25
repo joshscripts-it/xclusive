@@ -2,7 +2,7 @@
 
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import { ItemType, PageProps, ProductType } from "@/type.d";
+import { PageProps, ProductType } from "@/type.d";
 import { AllProducts } from "@/data/dummyData";
 import Image from "next/image";
 import {
@@ -23,7 +23,110 @@ import useEmblaCarousel from "embla-carousel-react";
 import { AppContext } from "@/app/Context/appContext";
 
 import { Thumb } from "@/app/Components/carouselThumbs";
-import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
+import {
+  BreadcrumbItem,
+  Breadcrumbs,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+} from "@nextui-org/react";
+
+const RelatedItemsComponent = ({
+  item,
+  isSeen,
+}: {
+  item: ProductType;
+  isSeen: React.ReactNode;
+}) => {
+  return (
+    //@FlashItem
+    <Card
+      id="card"
+      shadow="none"
+      style={{ maxWidth: 350, minWidth: 200, width: 350 }}
+    >
+      <CardBody
+        className="p-0 bg-gray-200 relative rounded-b-lg overflow-hidden w-full"
+        style={{ height: 250, minHeight: 250, maxHeight: 250 }}
+      >
+        <div className="relative w-full h-60 py-6 flex items-center justify-center">
+          {item?.discount && (
+            <Button
+              disableAnimation
+              size="sm"
+              variant="faded"
+              radius="sm"
+              className="absolute border-none left-4 top-4 bg-red-600 text-xs text-gray-50"
+              style={{ width: 40, height: 26 }}
+            >
+              - {item.discount}%
+            </Button>
+          )}
+
+          <Image
+            src={item.images[0]}
+            alt={item.name}
+            className="max-w-sm w-auto h-3/5"
+            priority={true}
+          />
+          <div className="absolute top-4 right-2 flex flex-col space-y-1">
+            <Button
+              disableAnimation
+              isIconOnly
+              size="sm"
+              variant="solid"
+              className="bg-gray-50 border-none"
+              radius="full"
+            >
+              <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+            </Button>
+            <Button
+              disableAnimation
+              radius="full"
+              isIconOnly
+              variant="solid"
+              size="sm"
+              className="bg-gray-50 border-none"
+            >
+              {isSeen}
+            </Button>
+          </div>
+        </div>
+        <Button
+          disableAnimation
+          variant="flat"
+          className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+        >
+          Add To Cart
+        </Button>
+      </CardBody>
+
+      <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
+        <div className="flex flex-col space-y-2">
+          <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
+          <div className="flex space-x-2">
+            <h4 className="text-base font-medium text-red-500 ">
+              $ {item.amount}
+            </h4>
+            {item?.discount && (
+              <h4 className="text-base font-medium text-gray-400 line-through">
+                $ {item.discount}
+              </h4>
+            )}
+          </div>
+
+          <span className="flex space-x-1">
+            {item.rating &&
+              Array.from(Array(Math.floor(item.rating))).map((id) => (
+                <IoStar className="text-yellow-500" key={item.ID} />
+              ))}
+          </span>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
 
 export default function ProductDetails({ params: { id } }: PageProps) {
   //INTERNAL STATE
@@ -70,9 +173,9 @@ export default function ProductDetails({ params: { id } }: PageProps) {
   const slides = Array.from(Array(SLIDE_COUNT).keys());
 
   const isSeen = visible ? (
-    <IoEyeOutline className="w-5 h-5 lg:w-6 lg:h-6 text-gray-700" />
+    <IoEyeOutline className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-gray-700" />
   ) : (
-    <IoEyeOffOutline className="w-5 h-5 lg:w-6 lg:h-6 text-gray-700" />
+    <IoEyeOffOutline className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-gray-700" />
   );
 
   return (
@@ -83,27 +186,33 @@ export default function ProductDetails({ params: { id } }: PageProps) {
         {isMatch.length && <BreadcrumbItem>{isMatch[0].name}</BreadcrumbItem>}
       </Breadcrumbs>
 
-      <div className="flex items-center justify-center flex-wrap md:flex-nowrap lg:flex-nowrap">
+      <div className="flex items-start justify-center flex-wrap md:flex-nowrap lg:flex-nowrap">
         {/* Main */}
-        <div className="basis-full md:basis-2/3 lg:basis-2/3 relative">
-          <div className="embla h-44" ref={emblaMainRef}>
-            <div className="embla__container">
+        <div className="basis-full flex flex-col sm:flex-row-reverse  justify-center md:basis-2/3 lg:basis-2/3 relative">
+          <div className="embla h-44 flex-1" ref={emblaMainRef}>
+            <div className="embla__container flex justify-center">
               {isMatch[0]?.images?.map((image: any, id: number) => (
-                <div className="embla__slide" key={id}>
+                <div
+                  className="embla__slide flex justify-center items-center self-center"
+                  key={id}
+                >
                   <Image
                     priority={true}
                     src={image}
                     alt="image details"
-                    className="w-auto object-cover"
+                    className="w-4/6 h-4/6 self-center"
+                    objectFit="contain"
                   />
                 </div>
               ))}
             </div>
           </div>
-
-          <div className="embla-thumbs self-center">
+          <div className="embla-thumbs self-center w-4/5 sm:w-2/6">
             <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
-              <div className="embla-thumbs__container">
+              <div
+                className="embla-thumbs__container justify-center items-center flex-row sm:flex-col"
+                style={{ display: "flex" }}
+              >
                 {slides.map((index) => (
                   <Thumb
                     onClick={() => onThumbClick(index)}
@@ -118,7 +227,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
           </div>
         </div>
         {/* Aside  */}
-        <form className="block basis-full md:basis-5/12 lg:basis-6/12">
+        <div className="block basis-full md:basis-5/12 lg:basis-6/12">
           <div className="flex flex-col space-y-8">
             <div className="space-y-2 border-b border-b-gray-300 py-4">
               <h2 className="text-gray-700 text-base lg:text-xl font-medium">
@@ -161,7 +270,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
                   {isMatch[0].sizes?.map((size, _) => (
                     <button
                       key={_}
-                      className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-xs md:text-sm"
+                      className="rounded border w-6 h-6 border-gray-300 text-gray-600 text-xs md:text-sm"
                     >
                       {size}
                     </button>
@@ -171,22 +280,31 @@ export default function ProductDetails({ params: { id } }: PageProps) {
 
               <div className="flex space-x-6 items-stretch">
                 <div className="basis-2/5 flex items-stretch border border-gray-300 divide-x rounded-md">
-                  <button className="basis-2/6 text-center flex items-center justify-center">
+                  <button className="basis-2/6 p-2 text-center flex items-center justify-center">
                     <IoRemoveOutline className="w-5 h-5 text-gray-600" />
                   </button>
-                  <button className="basis-2/3 text-gray-500 text-lg font-medium">
+                  <button className="basis-4/6 p-2 text-gray-500 text-lg font-medium">
                     2
                   </button>
-                  <button className="basis-2/6 bg-red-500 flex items-center justify-center">
+                  <button className="basis-2/6 bg-red-500 rounded-e-md p-2 flex items-center justify-center">
                     <IoAddOutline className="w-5 h-5 text-gray-50" />
                   </button>
                 </div>
-                <button className="basis-2/4 bg-red-500 p-2 rounded-md text-gray-100 text-base font-medium">
+
+                <Button
+                  disableAnimation
+                  className="basis-2/4 bg-red-500 p-2 rounded-md text-gray-100 text-base font-medium"
+                >
                   Buy Now
-                </button>
-                <button className="basis-2/12 rounded-md flex items-center justify-center p-2 border border-gray-300">
-                  <IoHeartOutline className="w-5 h-5 text-gray-500" />
-                </button>
+                </Button>
+                <Button
+                  radius="full"
+                  isIconOnly
+                  variant="solid"
+                  className="bg-gray-50 border-none"
+                >
+                  <IoHeartOutline className="w-5 h-5  text-gray-500" />
+                </Button>
               </div>
             </div>
 
@@ -216,10 +334,10 @@ export default function ProductDetails({ params: { id } }: PageProps) {
               </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
 
-      <div className="space-y-4 pt-8">
+      <div className="space-y-4 mt-8">
         {/* Bullet  */}
         <div className="flex items-center space-x-2">
           <div className="h-7 w-3 bg-red-600 rounded-sm" />
@@ -228,53 +346,9 @@ export default function ProductDetails({ params: { id } }: PageProps) {
           </h4>
         </div>
 
-        <div className="flex space-x-6 items-stretch overflow-x-auto px-2">
+        <div className="flex space-x-4 items-stretch overflow-x-auto">
           {shopList.map((item: ProductType) => (
-            <div key={item.ID} className={`relative flex flex-col space-y-2`}>
-              <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-52 lg:h-52 bg-gray-100 rounded-sm flex items-center justify-center">
-                <button className="absolute left-4 top-4 rounded-md p-1 bg-red-600 text-xs text-gray-50">
-                  - {item.discount}%
-                </button>
-                <Image
-                  src={item.images[0]}
-                  alt={item.name}
-                  className="w-2/5 h-2/5"
-                  priority={true}
-                />
-                <div className="absolute top-4 right-2 flex flex-col space-y-3">
-                  <button className="bg-gray-100">
-                    <IoHeartOutline className="w-5 h-5 lg:w-6 lg:h-6 text-gray-700" />
-                  </button>
-                  <button className="bg-gray-100">{isSeen}</button>
-                </div>
-
-                <button
-                  className="absolute w-full bottom-0 text-sm lg:text-base  text-center text-gray-100  p-2 bg-gray-800"
-                  // onClick={() => setCart(cart + 1)}
-                >
-                  Add To Cart
-                </button>
-              </div>
-              <Link href={`${item.path}/${item.ID}`} className="space-y-2 mb-4">
-                <h4 className="text-gray-700 text-sm lg:text-base font-medium">
-                  {item.name}
-                </h4>
-
-                <h4 className="space-x-3 font-medium">
-                  <span className="text-red-500 text-sm">${item.amount}</span>
-                  <span className="text-gray-400 text-sm line-through">
-                    ${item.prevAmount}
-                  </span>
-                </h4>
-
-                <span className="flex space-x-1">
-                  {item.rating &&
-                    Array.from(Array(Math.floor(item.rating))).map((id) => (
-                      <IoStar className="text-yellow-500" key={id} />
-                    ))}
-                </span>
-              </Link>
-            </div>
+            <RelatedItemsComponent item={item} key={item.ID} isSeen={isSeen} />
           ))}
         </div>
       </div>

@@ -213,6 +213,7 @@ export const Bestselling: ProductType[] = [
     amount: 120,
     prevAmount: 160,
     rating: 5,
+    ratersCount: 69,
     images: [havit_hv_g92_gamepad, havit_hv_g92_gamepad, havit_hv_g92_gamepad],
     ID: "Pid_000001",
     discount: "40",
@@ -224,6 +225,7 @@ export const Bestselling: ProductType[] = [
     name: "AK-900 Wired Keyboard",
     amount: 960,
     prevAmount: 1160,
+    ratersCount: 30,
     rating: 4,
     images: [
       ak_900_wired_keyboard,
@@ -246,6 +248,7 @@ export const Bestselling: ProductType[] = [
     discount: "30",
     path: "/products",
     colors: ["black", "coral"],
+    ratersCount: 39,
   },
   {
     name: "S-Series Comfort Chair",
@@ -258,6 +261,7 @@ export const Bestselling: ProductType[] = [
     path: "/products",
     sizes: ["S", "M"],
     colors: ["black"],
+    ratersCount: 40,
   },
 ];
 
