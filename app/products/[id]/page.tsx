@@ -186,10 +186,14 @@ export default function ProductDetails({ params: { id } }: PageProps) {
         {isMatch.length && <BreadcrumbItem>{isMatch[0].name}</BreadcrumbItem>}
       </Breadcrumbs>
 
-      <div className="flex items-start justify-center flex-wrap md:flex-nowrap lg:flex-nowrap">
+      <div className="flex  space-x-4 items-stretch justify-center flex-wrap md:flex-nowrap lg:flex-nowrap">
         {/* Main */}
-        <div className="basis-full flex flex-col sm:flex-row-reverse  justify-center md:basis-2/3 lg:basis-2/3 relative">
-          <div className="embla h-44 flex-1" ref={emblaMainRef}>
+        <div className="basis-full flex items-stretch space-x-4 flex-col sm:flex-row-reverse  justify-center md:basis-2/3 lg:basis-2/3 relative">
+          <div
+            className="embla flex justify-center items-center"
+            style={{ backgroundColor: "#F5F5F5" }}
+            ref={emblaMainRef}
+          >
             <div className="embla__container flex justify-center">
               {isMatch[0]?.images?.map((image: any, id: number) => (
                 <div
@@ -207,6 +211,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
               ))}
             </div>
           </div>
+
           <div className="embla-thumbs self-center w-4/5 sm:w-2/6">
             <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
               <div

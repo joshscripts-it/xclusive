@@ -13,9 +13,10 @@ export const Thumb: React.FC<PropType> = (props) => {
 
   return (
     <div
-      className={"embla-thumbs__slide".concat(
+      className={"embla-thumbs__slide m-2".concat(
         selected ? " embla-thumbs__slide--selected" : ""
       )}
+      style={{ backgroundColor: "#F5F5F5" }}
     >
       <button
         onClick={onClick}
