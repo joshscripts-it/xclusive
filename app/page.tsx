@@ -556,10 +556,7 @@ const FlashSalesComponent = ({
         </div> */}
       </div>
 
-      <button
-        disableAnimation
-        className="self-center rounded w-56 bg-red-600 text-gray-100 text-base text-center p-2"
-      >
+      <button className="self-center rounded w-56 bg-red-600 text-gray-100 text-base text-center p-2">
         View All Products
       </button>
     </div>
