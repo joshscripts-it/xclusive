@@ -3,11 +3,11 @@ import { IoCallOutline, IoMailOutline } from "react-icons/io5";
 
 export default function Page() {
   return (
-    <div className="container mx-auto mb-4 w-full h-auto p-8 space-y-8">
+    <div className="container mx-auto mb-4 w-full h-auto p-2 space-y-8">
       {/* Breadcrumbs */}
       <Breadcrumbs separator={"/"}>
-        <BreadcrumbItem>/Contact</BreadcrumbItem>
-        <BreadcrumbItem>/</BreadcrumbItem>
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        <BreadcrumbItem>contact</BreadcrumbItem>
       </Breadcrumbs>
 
       <div className="flex items-start  justify-between space-x-4 lg:space-x-6">

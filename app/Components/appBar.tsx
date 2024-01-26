@@ -40,8 +40,6 @@ export const AppbarComponent = () => {
   const pathname = usePathname();
 
   return (
-    // <div className="border-0 border-b-1 border-gray-300">
-    //   <div className="container mx-auto">
     <Navbar
       isBordered
       className="z-50"

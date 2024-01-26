@@ -1,3 +1,4 @@
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import { SideNavScreen } from "./SideNav";
 
 export default function LeafLayout({
@@ -9,9 +10,11 @@ export default function LeafLayout({
     <div className="container mx-auto w-full h-auto space-y-4 p-4">
       {/* Header */}
       <header className="flex justify-between items-center">
-        <h4 className="text-xs md:text-sm font-medium text-gray-400">
-          Home / <span className="text-gray-500">My Account</span>
-        </h4>
+        <Breadcrumbs separator="/">
+          <BreadcrumbItem href="/">Account</BreadcrumbItem>
+          <BreadcrumbItem>about</BreadcrumbItem>
+        </Breadcrumbs>
+
         <h4 className="text-base font-semibold text-gray-700 lg:text-lg">
           Welcome Back <span className="text-red-500">John!</span>
         </h4>

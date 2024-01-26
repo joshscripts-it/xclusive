@@ -179,19 +179,23 @@ export default function ProductDetails({ params: { id } }: PageProps) {
   );
 
   return (
-    <div className="container mx-auto mb-4 w-full h-auto p-8 space-y-8">
+    <div className="container mx-auto mb-4 w-full h-auto space-y-8">
       {/* Breadcrumbs */}
-      <Breadcrumbs separator={"/"}>
-        <BreadcrumbItem>/Product</BreadcrumbItem>
+      <Breadcrumbs separator={"/"} className="px-2">
+        <BreadcrumbItem href="/products">/Products</BreadcrumbItem>
         {isMatch.length && <BreadcrumbItem>{isMatch[0].name}</BreadcrumbItem>}
       </Breadcrumbs>
 
-      <div className="flex  space-x-4 items-stretch justify-center flex-wrap md:flex-nowrap lg:flex-nowrap">
+      <div className="flex space-x-4 items-stretch justify-center flex-wrap md:flex-nowrap lg:flex-nowrap">
         {/* Main */}
         <div className="basis-full flex items-stretch space-x-4 flex-col sm:flex-row-reverse  justify-center md:basis-2/3 lg:basis-2/3 relative">
           <div
-            className="embla flex justify-center items-center"
-            style={{ backgroundColor: "#F5F5F5" }}
+            className="embla flex-1 flex justify-center items-center bg-red-500"
+            style={{
+              backgroundColor: "#F5F5F5",
+              minHeight: 350,
+              minWidth: 300,
+            }}
             ref={emblaMainRef}
           >
             <div className="embla__container flex justify-center">
@@ -204,18 +208,21 @@ export default function ProductDetails({ params: { id } }: PageProps) {
                     priority={true}
                     src={image}
                     alt="image details"
-                    className="w-4/6 h-4/6 self-center"
+                    className="w-4/5 h-3/5 self-center"
                     objectFit="contain"
+                    style={{
+                      height: 300,
+                    }}
                   />
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="embla-thumbs self-center w-4/5 sm:w-2/6">
+          <div className="embla-thumbs self-center">
             <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
               <div
-                className="embla-thumbs__container justify-center items-center flex-row sm:flex-col"
+                className="embla-thumbs__container justify-center items-center flex-row flex-wrap sm:flex-col"
                 style={{ display: "flex" }}
               >
                 {slides.map((index) => (
@@ -342,7 +349,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
         </div>
       </div>
 
-      <div className="space-y-4 mt-8">
+      <div className="space-y-4 px-2 mt-8">
         {/* Bullet  */}
         <div className="flex items-center space-x-2">
           <div className="h-7 w-3 bg-red-600 rounded-sm" />

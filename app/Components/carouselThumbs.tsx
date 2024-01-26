@@ -28,7 +28,7 @@ export const Thumb: React.FC<PropType> = (props) => {
           src={imgSrc}
           alt="Your alt text"
           objectFit="contain"
-          style={{ maxWidth: 100, maxHeight: 100 }}
+          style={{ maxHeight: 100, width: 120, height: 120 }}
         />
       </button>
     </div>

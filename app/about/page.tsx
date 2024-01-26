@@ -22,11 +22,11 @@ import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 export default function Page() {
   return (
-    <div className="container mx-auto my-4  w-full h-auto p-8 space-y-12 lg:space-y-20">
-      {/* Breadcrumbs */}
+    <div className="container mx-auto my-4  w-full h-auto p-2 space-y-12 lg:space-y-20">
+      {/* Breadcrumb */}
       <Breadcrumbs separator={"/"}>
-        <BreadcrumbItem>/Contact</BreadcrumbItem>
-        <BreadcrumbItem>/</BreadcrumbItem>
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        <BreadcrumbItem>about</BreadcrumbItem>
       </Breadcrumbs>
 
       <div className="flex justify-between items-center flex-wrap-reverse md:flex-nowrap">

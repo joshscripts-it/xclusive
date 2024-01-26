@@ -304,13 +304,13 @@ const ShowcaseComponent = () => {
         ))}
       </Listbox>
 
-      <div className="w-auto overflow-hidden flex flex-col relative flex-1">
+      <div className="w-full overflow-hidden flex flex-col relative flex-1">
         <div className="embla min-h-full" ref={emblaRef}>
-          <div className="embla__container h-full">
+          <div className="embla__container w-full h-full">
             {["showcase 1", "showcase 2", "showcase 3", "showcase 4"].map(
               (_, i) => (
                 <div className="embla__slide" key={_}>
-                  <div className="bg-gray-800 p-4 w-full min-h-full h-80 flex items-center justify-evenly md:mt-4">
+                  <div className="bg-gray-800 p-4 w-full min-h-full h-80 flex items-center justify-evenly">
                     <div className="flex flex-col items-start space-y-4">
                       <div className="flex items-center justify-start">
                         <IoLogoApple className="text-gray-100 mr-2 w-6 h-6" />
@@ -343,8 +343,6 @@ const ShowcaseComponent = () => {
                       className="w-3/5 h-4/5"
                       alt="showcase banner"
                       priority={true}
-                      // width={496}
-                      // height={352}
                     />
                   </div>
                 </div>
@@ -393,6 +391,7 @@ const FlashSalesComponent = ({
     () => emblaApi && emblaApi.scrollPrev(),
     [emblaApi]
   );
+
   const scrollNext = useCallback(
     () => emblaApi && emblaApi.scrollNext(),
     [emblaApi]
@@ -642,23 +641,26 @@ const BestSellingComponent = ({
   isSeen: React.ReactNode;
 }) => {
   const RenderBestSellingItem = ({ item }: { item: ProductType }) => (
+    //@FlashItem
     <Card
+      id="card"
       shadow="none"
-      className="p-0 max-w-sm min-w-sm sm  h-auto relative"
+      isPressable
       style={{ maxWidth: 350, minWidth: 200, width: 350 }}
     >
       <CardBody
-        className="p-0 bg-gray-200 h-40 relative rounded-b-lg"
+        className="p-0 bg-gray-200 relative rounded-b-lg overflow-hidden w-full"
         style={{ height: 250, minHeight: 250, maxHeight: 250 }}
       >
-        <div className="relative w-full h-full py-6 flex items-center justify-center">
+        <div className="relative w-full h-60 py-6 flex items-center justify-center">
           {item?.discount && (
             <Button
               disableAnimation
               size="sm"
               variant="faded"
               radius="sm"
-              className="absolute border-none left-4 top-4 w-4 bg-red-600 text-xs text-gray-50"
+              className="absolute border-none left-4 top-4 bg-red-600 text-xs text-gray-50"
+              style={{ width: 40, height: 26 }}
             >
               - {item.discount}%
             </Button>
@@ -669,7 +671,6 @@ const BestSellingComponent = ({
             alt={item.name}
             className="max-w-sm w-auto h-3/5"
             priority={true}
-            objectFit="contain"
           />
           <div className="absolute top-4 right-2 flex flex-col space-y-1">
             <Button
@@ -696,6 +697,8 @@ const BestSellingComponent = ({
         </div>
         <Button
           disableAnimation
+          disableRipple
+          variant="flat"
           className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
         >
           Add To Cart
@@ -703,38 +706,32 @@ const BestSellingComponent = ({
       </CardBody>
 
       <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-2">
           <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
           <div className="flex space-x-2">
             <h4 className="text-base font-medium text-red-500 ">
               $ {item.amount}
             </h4>
-            {item?.prevAmount && (
+            {item?.discount && (
               <h4 className="text-base font-medium text-gray-400 line-through">
-                $ {item.prevAmount}
+                $ {item.discount}
               </h4>
             )}
           </div>
-          <div className="flex space-x-2">
-            <span className="flex space-x-1">
-              {item.rating &&
-                Array.from(Array(Math.floor(item.rating))).map((id) => (
-                  <IoStar className="text-yellow-500" key={item.ID} />
-                ))}
-            </span>
-            {item.ratersCount && (
-              <h4 className="text-base font-medium text-gray-400">
-                ({item.ratersCount})
-              </h4>
-            )}
-          </div>
+
+          <span className="flex space-x-1">
+            {item.rating &&
+              Array.from(Array(Math.floor(item.rating))).map((id) => (
+                <IoStar className="text-yellow-500" key={item.ID} />
+              ))}
+          </span>
         </div>
       </CardFooter>
     </Card>
   );
 
   return (
-    <div className="px-4 w-full flex flex-col justify-center space-y-4  mx-auto pt-16">
+    <div className="w-full flex flex-col justify-center space-y-4  mx-auto pt-16">
       {/* Best selling Products */}
       <div className="ml-4">
         {/* Bullet  */}
@@ -761,7 +758,10 @@ const BestSellingComponent = ({
       </div>
 
       {/* items */}
-      <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto px-2">
+      <div
+        className="flex items-stretch
+      overflow-x-auto relative space-x-4  p-1 w-full"
+      >
         {bestSelling.map((item: ProductType, _) => (
           <RenderBestSellingItem item={item} key={item.ID} />
         ))}
@@ -772,7 +772,7 @@ const BestSellingComponent = ({
 
 const BannerComponent = () => {
   return (
-    <div className="px-4 w-full mx-auto pt-8 pb-8">
+    <div className="w-full mx-auto pt-8 pb-8">
       {/* Categories2 */}
       <div className="py-12 bg-gray-900 space-x-4 flex items-center justify-around">
         <div className="space-y-6 flex flex-col">
@@ -816,7 +816,7 @@ const ProductsComponent = ({
   const ProductItem = ({ item }: { item: ProductType }) => (
     <Card
       shadow="none"
-      className="p-0 max-w-sm min-w-sm w-auto h-auto relative"
+      className="p-0 max-w-sm min-w-sm w-auto h-full relative"
     >
       <CardBody className="p-0 bg-gray-200 h-40 relative rounded-b-lg">
         <div className="relative w-full h-full py-6 flex items-center justify-center">
@@ -901,9 +901,9 @@ const ProductsComponent = ({
   );
 
   return (
-    <div className="space-y-4 w-full border-b border-gray-200 pb-8">
+    <div className="space-y-4 px-2 w-full border-b border-gray-200 pb-8">
       <div className="w-full flex flex-col justify-center space-y-6 mx-auto">
-        <div className="ml-4">
+        <div>
           {/* Bullet  */}
           <div className="flex items-center space-x-2">
             <div className="h-7 w-3 bg-red-600 rounded-sm" />
@@ -947,7 +947,7 @@ const ProductsComponent = ({
         </div>
 
         {/* items */}
-        <div className="w-full grid p-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-4 mb-6">
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-4 mb-6">
           {products.map((item: ProductType, _) => (
             <ProductItem item={item} key={item.ID} />
           ))}
@@ -974,7 +974,7 @@ const NewArrivalComponent = ({
   scrollToTop: () => void;
 }) => {
   return (
-    <div className="w-full flex flex-col justify-center space-y-4  mx-auto pb-8 pt-8 px-4 ">
+    <div className="w-full flex flex-col justify-center space-y-4  mx-auto pb-8 pt-8">
       <div className="ml-4">
         {/* Bullet  */}
         <div className="flex items-center space-x-2">
@@ -1055,7 +1055,7 @@ const NewArrivalComponent = ({
         </div>
       </div>
 
-      <div className="flex items-center justify-center space-x-6 md:justify-evenly pt-16">
+      <div className="flex items-center justify-center space-x-6 md:justify-evenly px-4 pt-16">
         <div className="basis-1/3 flex flex-col items-center justify-center space-y-4">
           {/* Icon  */}
           <button className="p-2 md:p-3 border-8 text-inherit border-gray-300 rounded-full bg-gray-900">

@@ -16,10 +16,10 @@ export default function Page() {
     .reduce((prevVal, currentVal) => prevVal + currentVal);
 
   return (
-    <div className="container mx-auto my-4  w-full h-auto p-8 space-y-8">
+    <div className="container mx-auto my-4  w-full h-auto p-2 space-y-8">
       {/* Breadcrumb */}
       <Breadcrumbs separator={"/"}>
-        <BreadcrumbItem>/Home</BreadcrumbItem>
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
         <BreadcrumbItem>carts</BreadcrumbItem>
       </Breadcrumbs>
 

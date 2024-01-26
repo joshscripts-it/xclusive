@@ -124,7 +124,7 @@ export default function Page() {
   );
 
   return (
-    <div className="container mx-auto my-4  w-full h-auto p-8 space-y-16">
+    <div className="container mx-auto my-4 px-2  w-full h-auto space-y-16">
       {/* WishList  */}
       <div className="space-y-6">
         {/* Header */}
