@@ -107,7 +107,7 @@ const RelatedItemsComponent = ({
           <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
           <div className="flex space-x-2">
             <h4 className="text-base font-medium text-red-500 ">
-              $ {item.amount}
+              $ {item.price}
             </h4>
             {item?.discount && (
               <h4 className="text-base font-medium text-gray-400 line-through">
@@ -256,7 +256,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
                   )}
               </span>
               <p className="text-gray-700 text-base lg:text-xl font-medium">
-                ${isMatch[0].amount}
+                ${isMatch[0].price}
               </p>
 
               <p className="text-gray-500 text-sm lg:text-base">
