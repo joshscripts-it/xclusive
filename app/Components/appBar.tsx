@@ -93,7 +93,7 @@ export const AppbarComponent = () => {
           <Link
             color="foreground"
             href="/sign-up"
-            className="text-base lg:text-lg"
+            className="text-sm lg:text-base"
           >
             Sign Up
           </Link>

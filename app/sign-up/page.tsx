@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import shopping_cart from "../../assets/images/shopping.webp";
 import logo_google from "../../assets/icons/icons8-google-96.svg";
+import { Button } from "@nextui-org/react";
 
 export default function SigninPage() {
   return (
@@ -25,28 +26,39 @@ export default function SigninPage() {
           <div className="w-full space-y-4">
             <input
               placeholder="Name"
-              className="block w-full border-b text-gray-600 text-base placeholder-gray-400 border-gray-300 p-2 md:text-left"
+              className="block w-full text-gray-600 text-base placeholder-gray-400 border-gray-300 p-2 md:text-left "
             />
             <input
               placeholder="Email or Phone Number"
-              className="w-full block border-b text-gray-600 text-base placeholder-gray-400 border-gray-300 p-2 md:text-left"
+              className="w-full block text-gray-600 text-base placeholder-gray-400 border-gray-300 p-2 md:text-lef focus:border-slate-500"
             />
             <input
               placeholder="Password"
-              className="w-full block border-b text-gray-600 text-base placeholder-gray-400 border-gray-300 p-2"
+              className="w-full block text-gray-600 text-base placeholder-gray-400 border-gray-300 p-2 md:text-left focus:border-slate-500 active:border-slate-500"
             />
-            <button className="w-full text-lg bg-red-600 font-medium text-gray-100 p-4 rounded">
+            <Button
+              disableRipple
+              disableAnimation
+              size="lg"
+              className="w-full text-lg bg-red-600 font-medium text-gray-100 p-4 rounded"
+            >
               Create Account
-            </button>
+            </Button>
 
-            <button className="w-full flex items-center justify-center text-lg outline-1 outline outline-gray-400 font-medium text-gray-600 p-4 rounded">
+            <Button
+              disableAnimation
+              disableRipple
+              size="lg"
+              variant="solid"
+              className="w-full flex items-center justify-center text-lg outline-1 outline bg-transparent outline-gray-400 font-medium text-gray-600 p-4 rounded"
+            >
               <Image
                 src={logo_google}
                 alt="logo google"
                 className="w-7 h-7 mr-4"
               />
               Sign-up with Google
-            </button>
+            </Button>
             <div className="flex items-center justify-center space-x-4">
               <p className="text-gray-600 text-base md:text-md lg:text-lg">
                 Already have account?

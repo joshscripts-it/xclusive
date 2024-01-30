@@ -1,29 +1,66 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Image from "next/image";
 import { AppContext } from "../Context/appContext";
 import master_card from "../../assets/images/master.png";
 import visa_card from "../../assets/images/visa.png";
 import bkash_card from "../../assets/images/bkash.png";
 import nagad_card from "../../assets/images/nagad.png";
+import {
+  BreadcrumbItem,
+  Breadcrumbs,
+  Button,
+  Radio,
+  RadioGroup,
+} from "@nextui-org/react";
 
 export default function Page() {
+  const [coupon, setCoupon] = useState<string>("");
+  const [paymentMethod, setPaymentMethod] = useState("cash on delivery");
   const { cart } = useContext(AppContext);
 
-  const cartTotal = cart
-    ?.map((val: any) => val.amount)
-    .reduce((prevVal, currentVal) => prevVal + currentVal);
+  const handleApplyCoupon = () => {
+    if (!coupon) {
+      return alert("Invalid coupon code!");
+    }
+
+    alert("Coupon code applied successfully");
+  };
+
+  //calc item total
+  const itemTotals =
+    cart &&
+    cart.reduce((acc, item) => {
+      const existingItem = acc.find((i) => i.ID === item?.ID);
+      if (existingItem) {
+        existingItem.total += item?.price * item?.quantity;
+      } else {
+        acc.push({
+          productId: item?.ID,
+          total: item?.price * item?.quantity,
+        });
+      }
+      return acc;
+    }, [] as { productId: string; total: number }[]);
+
+  //calculate grand total
+  const cartTotal =
+    itemTotals && itemTotals.reduce((total, item) => total + item.total, 0);
 
   return (
     <div className="container mx-auto  w-full h-auto p-8 space-y-8">
       {/* Breadcrumb */}
-      <header className="flex justify-between items-center">
-        <h4 className="text-xs font-medium text-gray-400 md:text-sm">
-          Account / My account / product / cart /{" "}
-          <span className="text-gray-500">Checkout</span>
-        </h4>
-      </header>
+      <Breadcrumbs separator="/">
+        <BreadcrumbItem href="/account">Account</BreadcrumbItem>
+        <BreadcrumbItem href="/account/my_account">my account</BreadcrumbItem>
+        <BreadcrumbItem href="/account/my_account/product">
+          product
+        </BreadcrumbItem>
+        <BreadcrumbItem href="/account/product/checkout">
+          checkout
+        </BreadcrumbItem>
+      </Breadcrumbs>
 
       <div className="pt-4">
         <div className="flex flex-wrap justify-center md:justify-between items-stretch space-y-8">
@@ -126,45 +163,54 @@ export default function Page() {
                 <h4 className="text-base text-gray-700">$ {cartTotal}</h4>
               </div>
 
-              <div className="flex items-center justify-between space-x-4  flex-wrap">
-                <label className="flex items-center justify-start space-x-4">
-                  <input
-                    type="checkbox"
-                    className="rounded-full checked:text-red-500 checked:ring-red-500 hover:ring-red-500 active:ring-red-500 indeterminate:ring-red-500"
-                  />
-                  <h4 className="text-base text-gray-700">Bank</h4>
-                </label>
-                <div className="flex items-center justify-end space-x-4">
-                  <Image src={master_card} alt="card master" />
-                  <Image src={visa_card} alt="card master" />
-                  <Image src={bkash_card} alt="card master" />
-                  <Image src={nagad_card} alt="card master" />
-                </div>
-              </div>
+              <RadioGroup
+                label="Choose Payment Method"
+                color="danger"
+                defaultValue={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              >
+                <Radio value="Bank">
+                  <div className="flex w-full space-x-4 justify-between items-center">
+                    <h4>Bank</h4>
+                    <div className="flex items-center justify-end space-x-4">
+                      <Image src={master_card} alt="card master" />
+                      <Image src={visa_card} alt="card master" />
+                      <Image src={bkash_card} alt="card master" />
+                      <Image src={nagad_card} alt="card master" />
+                    </div>
+                  </div>
+                </Radio>
 
-              <label className="flex items-center justify-start space-x-4">
-                <input
-                  type="checkbox"
-                  className="rounded-full checked:text-red-500 checked:ring-red-500 hover:ring-red-500 active:ring-red-500 indeterminate:ring-red-500"
-                />
-                <h4 className="text-base text-gray-700">Cash on delivery</h4>
-              </label>
+                <Radio value="cash on delivery">Cash on delivery</Radio>
+              </RadioGroup>
 
-              <div className="basis-full flex items-center space-x-2">
+              <div className="basis-full flex items-stretch space-x-2">
                 <input
                   placeholder="Coupon Code"
+                  defaultValue={coupon}
+                  onChange={(e) => setCoupon(e.target.value)}
                   type="text"
                   className="w-full flex-1 form-input p-4 text-center border-0 bg-slate-100 focus:border-slate-500 focus:ring-slate-400"
                 />
 
-                <button className="p-4 flex items-center justify-center text-base md:text-sm lg:text-base text-gray-50 bg-red-500 rounded">
+                <Button
+                  variant="solid"
+                  color="danger"
+                  size="lg"
+                  className="p-4 flex items-center justify-center text-base md:text-sm lg:text-base text-gray-50 bg-red-500 rounded font-medium"
+                  onPress={handleApplyCoupon}
+                >
                   Apply Code
-                </button>
+                </Button>
               </div>
 
-              <button className="self-start py-1 px-5  md:w-auto lg:w-48 h-14 flex items-center justify-center text-base text-gray-50 bg-red-500 rounded">
-                place order
-              </button>
+              <Button
+                color="danger"
+                size="lg"
+                className="self-start py-1 px-5 w-full  md:w-auto lg:w-48 h-14 flex items-center justify-center text-base lg:text-lg text-gray-50 bg-red-500 rounded font-medium"
+              >
+                Place Order
+              </Button>
             </div>
           </div>
         </div>

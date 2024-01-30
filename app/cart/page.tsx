@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../Context/appContext";
 import Image from "next/image";
 import { IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
@@ -15,27 +15,40 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
+  getKeyValue,
 } from "@nextui-org/react";
 
 export default function Page() {
+  const [coupon, setCoupon] = useState<string>("");
   const { cart } = useContext(AppContext);
 
-  //calc item total
-  const itemTotals = cart.reduce((acc, item) => {
-    const existingItem = acc.find((i) => i.ID === item.ID);
-    if (existingItem) {
-      existingItem.total += item.price * item.quantity;
-    } else {
-      acc.push({
-        productId: item.ID,
-        total: item.price * item.quantity,
-      });
+  const handleApplyCoupon = () => {
+    if (!coupon) {
+      return alert("Please enter coupon code");
     }
-    return acc;
-  }, [] as { productId: string; total: number }[]);
+
+    alert("Coupon applied successfully!");
+  };
+
+  //calc item total
+  const itemTotals =
+    cart &&
+    cart.reduce((acc, item) => {
+      const existingItem = acc.find((i) => i.ID === item?.ID);
+      if (existingItem) {
+        existingItem.total += item?.price * item?.quantity;
+      } else {
+        acc.push({
+          productId: item?.ID,
+          total: item?.price * item?.quantity,
+        });
+      }
+      return acc;
+    }, [] as { productId: string; total: number }[]);
 
   //calculate grand total
-  const cartTotal = itemTotals.reduce((total, item) => total + item.total, 0);
+  const cartTotal =
+    itemTotals && itemTotals.reduce((total, item) => total + item.total, 0);
 
   const columns = [
     {
@@ -65,16 +78,24 @@ export default function Page() {
       </Breadcrumbs>
 
       <div>
-        <div className="space-y-8">
+        <div className="space-y-8 ">
           {cart && cart?.length ? (
             <>
-              <Table isStriped aria-label="cart lists">
+              <Table
+                isStriped
+                aria-label="cart lists"
+                classNames={{ wrapper: "rounded-sm" }}
+              >
                 <TableHeader columns={columns}>
                   {(column) => <TableColumn>{column.label}</TableColumn>}
                 </TableHeader>
                 <TableBody items={[...cart]}>
                   {(item) => (
                     <TableRow key={item.ID}>
+                      {(columnsKey) => {
+                        console.log(getKeyValue(item, columnsKey));
+                        return <div />;
+                      }}
                       <TableCell>
                         <div className="flex items-center space-x-2">
                           <Image
@@ -93,27 +114,36 @@ export default function Page() {
                         </h4>
                       </TableCell>
                       <TableCell>
-                        <div className="shadow border border-gray-400  w-20 rounded flex items-center justify-center space-x-1">
+                        <div
+                          className="shadow border border-gray-400   rounded flex items-center justify-center space-x-1"
+                          style={{
+                            width: 80,
+                            maxHeight: 50,
+                          }}
+                        >
                           <input
                             name="itemCount"
                             defaultValue={item.quantity}
-                            className="flex-1 h-full block w-full bg-transparent border-0 text-sm shadow-sm text-center placeholder-slate-400 focus:ring-0"
-                            style={{ minHeight: "100%" }}
+                            className="flex-1 h-full block w-full bg-transparent border-0 text-xs md:text-sm  font-medium lg:text-base shadow-sm text-center placeholder-slate-400 focus:ring-0"
                           />
-                          <div className="flex flex-col items-center justify-center space-y-1">
+                          <div className="flex flex-col items-center justify-center">
                             <Button
                               disableRipple
-                              variant="light"
                               isIconOnly
                               size="sm"
+                              variant="solid"
+                              className="flex-1 bg-transparent"
+                              radius="full"
                             >
                               <IoChevronUpOutline className="w-3 h-3 text-gray-500" />
                             </Button>
                             <Button
                               disableRipple
-                              variant="light"
                               isIconOnly
                               size="sm"
+                              radius="full"
+                              variant="solid"
+                              className="flex-1 bg-transparent"
                             >
                               <IoChevronDownOutline className="w-3 h-3 text-gray-500" />
                             </Button>
@@ -123,10 +153,10 @@ export default function Page() {
 
                       <TableCell>
                         <h4 className="text-xs md:text-sm lg:text-base font-medium text-gray-500 text-center">
-                          {
+                          ${" "}
+                          {itemTotals &&
                             itemTotals.find((i) => i.productId === item.ID)
-                              ?.total
-                          }
+                              ?.total}
                         </h4>
                       </TableCell>
                     </TableRow>
@@ -148,23 +178,28 @@ export default function Page() {
               <div className="flex items-start justify-between flex-wrap space-y-3 pt-16">
                 <div className="basis-full md:basis-2/4 flex items-center space-x-2 pr-2">
                   <input
+                    defaultValue={coupon}
+                    onChange={(e) => setCoupon(e.target.value)}
                     placeholder="Coupon Code"
                     type="text"
                     className="w-full flex-1W lg:w-48 text-sm p-4 text-center border-0 bg-slate-100 focus:border-slate-500 focus:ring-slate-400"
                   />
 
-                  <button className="w-48 p-4 flex items-center justify-center text-sm lg:text-base text-gray-50 bg-red-500 rounded">
+                  <button
+                    className="w-48 p-4 flex items-center justify-center text-sm lg:text-base text-gray-50 bg-red-500 rounded"
+                    onClick={handleApplyCoupon}
+                  >
                     Apply Code
                   </button>
                 </div>
 
                 <div className="basis-full md:basis-2/4  p-6 flex flex-col justify-center text-sm lg:text-base font-medium rounded space-y-4 text-gray-600 border border-gray-300">
-                  <h2 className="text-base lg:text-lg font-medium text-gray-700">
+                  <h2 className="text-lg lg:text-xl font-semibold text-gray-700">
                     Cart Total
                   </h2>
                   <div className="flex items-center justify-between p-3 border-b border-b-gray-300">
                     <h4 className="text-sm md:text-base lg:text-lg text-gray-700">
-                      Subtotal:{" "}
+                      Subtotal:
                     </h4>
                     <h4 className="text-sm md:text-base lg:text-lg text-gray-700">
                       $ {cartTotal}
@@ -172,7 +207,7 @@ export default function Page() {
                   </div>
                   <div className="flex items-center justify-between p-3 border-b border-b-gray-300">
                     <h4 className="text-sm md:text-base lg:text-lg text-gray-700">
-                      Shipping:{" "}
+                      Shipping:
                     </h4>
                     <h4 className="text-sm md:text-base lg:text-lg text-gray-700">
                       Free
@@ -180,8 +215,8 @@ export default function Page() {
                   </div>
 
                   <div className="flex items-center justify-between p-3">
-                    <h4 className="text-sm md:text-base lg:text-lg text-gray-700">
-                      Total:{" "}
+                    <h4 className="text-sm md:text-lg lg:text-xl text-gray-700">
+                      Total:
                     </h4>
                     <h4 className="text-sm md:text-base lg:text-lg text-gray-700">
                       $ {cartTotal}
