@@ -57,9 +57,9 @@ const Carousel: React.FC<PropType> = ({ shopList, isSeen }: any) => {
                   </h4>
 
                   <h4 className="space-x-3 font-medium">
-                    <span className="text-red-500 text-sm">${item.amount}</span>
+                    <span className="text-red-500 text-sm">${item.price}</span>
                     <span className="text-gray-400 text-sm line-through">
-                      ${item.prevAmount}
+                      ${item.prevPrice}
                     </span>
                   </h4>
 
