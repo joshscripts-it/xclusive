@@ -47,7 +47,7 @@ export const DummyUsers = [
 export const Products: ProductType[] = [
   {
     name: "Breed Dry Dog Food",
-    amount: 100,
+    price: 100,
     images: dog_food,
     rating: 3.5,
     ID: "Pid_0001",
@@ -56,7 +56,7 @@ export const Products: ProductType[] = [
 
   {
     name: "Canon EOS Dslr Camera",
-    amount: 360,
+    price: 360,
     images: canon_dslr_camera,
     rating: 3.5,
     ID: "Pid_0002",
@@ -65,7 +65,7 @@ export const Products: ProductType[] = [
 
   {
     name: "Asus FHD Gaming Laptop",
-    amount: 700,
+    price: 700,
     images: asus_gaming_pc,
     rating: 2.5,
     ID: "Pid_0003",
@@ -73,7 +73,7 @@ export const Products: ProductType[] = [
   },
   {
     name: "Curology Product Set",
-    amount: 500,
+    price: 500,
     images: curology_product_set,
     rating: 3.5,
     ID: "Pid_0004",
@@ -81,7 +81,7 @@ export const Products: ProductType[] = [
   },
   {
     name: "Kids Electric Car",
-    amount: 960,
+    price: 960,
     images: kid_electric_car,
     rating: 4.5,
     ID: "Pid_0005",
@@ -92,7 +92,7 @@ export const Products: ProductType[] = [
 
   {
     name: "Jr. Zoom Soccer Cleats",
-    amount: 1160,
+    price: 1160,
     images: jr_zoom_soccer_cleats,
     rating: 3.5,
     ID: "Pid_0006",
@@ -102,7 +102,7 @@ export const Products: ProductType[] = [
 
   {
     name: "GP11 Shooter USB Gamepad",
-    amount: 660,
+    price: 660,
     images: gp11_prd3,
     rating: 3.5,
     ID: "Pid_0007",
@@ -113,7 +113,7 @@ export const Products: ProductType[] = [
 
   {
     name: "Quilted Satin Jacket",
-    amount: 660,
+    price: 660,
     images: [quilted_satin_jacket],
     rating: 5.5,
     ID: "Pid_0008",
@@ -125,8 +125,8 @@ export const Products: ProductType[] = [
 export const Shoplist: ProductType[] = [
   {
     name: "HAVIT HV-G92 Gamepad",
-    amount: 120,
-    prevAmount: 160,
+    price: 120,
+    prevPrice: 160,
     rating: 5,
     images: [havit_hv_g92_gamepad, havit_hv_g92_gamepad, havit_hv_g92_gamepad],
     ID: "Pid_000001",
@@ -137,8 +137,8 @@ export const Shoplist: ProductType[] = [
   },
   {
     name: "AK-900 Wired Keyboard",
-    amount: 960,
-    prevAmount: 1160,
+    price: 960,
+    prevPrice: 1160,
     rating: 4,
     images: [
       ak_900_wired_keyboard,
@@ -153,8 +153,8 @@ export const Shoplist: ProductType[] = [
   },
   {
     name: "IPS LCD Gaming Monitor",
-    amount: 370,
-    prevAmount: 400,
+    price: 370,
+    prevPrice: 400,
     rating: 5.5,
     images: [ips_lcd_gaming_monitor],
     ID: "Pid_000003",
@@ -164,8 +164,8 @@ export const Shoplist: ProductType[] = [
   },
   {
     name: "S-Series Comfort Chair",
-    amount: 375,
-    prevAmount: 400,
+    price: 375,
+    prevPrice: 400,
     rating: 5.5,
     images: [s_series_confort_chair],
     ID: "Pid_000004",
@@ -179,8 +179,8 @@ export const Shoplist: ProductType[] = [
 export const Cart = [
   {
     name: "HAVIT HV-G92 Gamepad",
-    amount: 120,
-    prevAmount: 160,
+    price: 120,
+    prevPrice: 160,
     rating: 5,
     images: [havit_hv_g92_gamepad, havit_hv_g92_gamepad, havit_hv_g92_gamepad],
     ID: "Pid_000001",
@@ -188,11 +188,12 @@ export const Cart = [
     path: "/products",
     colors: ["red", "black", "orange", "blue"],
     sizes: ["S", "M", "L"],
+    quantity: 2,
   },
   {
     name: "AK-900 Wired Keyboard",
-    amount: 960,
-    prevAmount: 1160,
+    price: 960,
+    prevPrice: 1160,
     rating: 4,
     images: [
       ak_900_wired_keyboard,
@@ -204,14 +205,15 @@ export const Cart = [
     path: "/products",
     sizes: ["M", "L"],
     colors: ["black", "#CC3"],
+    quantity: 3,
   },
 ];
 
 export const Bestselling: ProductType[] = [
   {
     name: "HAVIT HV-G92 Gamepad",
-    amount: 120,
-    prevAmount: 160,
+    price: 120,
+    prevPrice: 160,
     rating: 5,
     ratersCount: 69,
     images: [havit_hv_g92_gamepad, havit_hv_g92_gamepad, havit_hv_g92_gamepad],
@@ -223,8 +225,8 @@ export const Bestselling: ProductType[] = [
   },
   {
     name: "AK-900 Wired Keyboard",
-    amount: 960,
-    prevAmount: 1160,
+    price: 960,
+    prevPrice: 1160,
     ratersCount: 30,
     rating: 4,
     images: [
@@ -240,8 +242,8 @@ export const Bestselling: ProductType[] = [
   },
   {
     name: "IPS LCD Gaming Monitor",
-    amount: 370,
-    prevAmount: 400,
+    price: 370,
+    prevPrice: 400,
     rating: 5.5,
     images: [ips_lcd_gaming_monitor],
     ID: "Pid_000003",
@@ -252,8 +254,8 @@ export const Bestselling: ProductType[] = [
   },
   {
     name: "S-Series Comfort Chair",
-    amount: 375,
-    prevAmount: 400,
+    price: 375,
+    prevPrice: 400,
     rating: 5.5,
     images: [s_series_confort_chair],
     ID: "Pid_000004",
@@ -268,8 +270,8 @@ export const Bestselling: ProductType[] = [
 export const Wishlist = [
   {
     name: "S-Series Comfort Chair",
-    amount: 375,
-    prevAmount: 400,
+    price: 375,
+    prevPrice: 400,
     rating: 5.5,
     images: [s_series_confort_chair],
     ID: "Pid_000004",
@@ -278,13 +280,45 @@ export const Wishlist = [
     sizes: ["S", "M"],
     colors: ["black"],
   },
+  {
+    name: "IPS LCD Gaming Monitor",
+    price: 370,
+    prevPrice: 400,
+    rating: 5.5,
+    images: [ips_lcd_gaming_monitor],
+    ID: "Pid_000003",
+    discount: "30",
+    path: "/products",
+    colors: ["black", "coral"],
+  },
+
+  {
+    name: "The North Coat",
+    price: 260,
+    prevPrice: 360,
+    rating: 3.5,
+    images: [north_coat],
+    ID: "Pid_000005",
+    path: "/products",
+    colors: ["red", "black", "orange"],
+    sizes: ["S", "M", "L"],
+  },
+  {
+    name: "Asus FHD Gaming Laptop",
+    price: 700,
+    images: [asus_gaming_pc],
+    rating: 3.5,
+    ID: "Pid_0000012",
+    path: "/products",
+    colors: ["white", "red"],
+  },
 ];
 
 export const AllProducts: ProductType[] = [
   {
     name: "HAVIT HV-G92 Gamepad",
-    amount: 120,
-    prevAmount: 160,
+    price: 120,
+    prevPrice: 160,
     rating: 5,
     images: [havit_hv_g92_gamepad, havit_hv_g92_gamepad, havit_hv_g92_gamepad],
     ID: "Pid_000001",
@@ -295,8 +329,8 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "AK-900 Wired Keyboard",
-    amount: 960,
-    prevAmount: 1160,
+    price: 960,
+    prevPrice: 1160,
     rating: 4,
     images: [
       ak_900_wired_keyboard,
@@ -311,8 +345,8 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "IPS LCD Gaming Monitor",
-    amount: 370,
-    prevAmount: 400,
+    price: 370,
+    prevPrice: 400,
     rating: 5.5,
     images: [ips_lcd_gaming_monitor],
     ID: "Pid_000003",
@@ -322,8 +356,8 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "S-Series Comfort Chair",
-    amount: 375,
-    prevAmount: 400,
+    price: 375,
+    prevPrice: 400,
     rating: 5.5,
     images: [s_series_confort_chair],
     ID: "Pid_000004",
@@ -334,8 +368,8 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "The North Coat",
-    amount: 260,
-    prevAmount: 360,
+    price: 260,
+    prevPrice: 360,
     rating: 3.5,
     images: [north_coat],
     ID: "Pid_000005",
@@ -345,8 +379,8 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "Gucci Duffle Bag",
-    amount: 260,
-    prevAmount: 360,
+    price: 260,
+    prevPrice: 360,
     rating: 5,
     images: [gucci_bag],
     ID: "Pid_000007",
@@ -356,8 +390,8 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "RGB Liquid Cooler",
-    amount: 160,
-    prevAmount: 170,
+    price: 160,
+    prevPrice: 170,
     rating: 3.5,
     images: [rgb_cooler],
     ID: "Pid_000008",
@@ -367,8 +401,8 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "Small Bookshelf",
-    amount: 360,
-    prevAmount: 360,
+    price: 360,
+    prevPrice: 360,
     rating: 2.5,
     images: [book_shelf],
     ID: "Pid_000009",
@@ -378,7 +412,7 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "Breed Dry Dog Food",
-    amount: 100,
+    price: 100,
     images: [dog_food],
     rating: 3.5,
     ID: "Pid_0000010",
@@ -388,7 +422,7 @@ export const AllProducts: ProductType[] = [
 
   {
     name: "Canon EOS Dslr Camera",
-    amount: 360,
+    price: 360,
     images: [canon_dslr_camera],
     rating: 4.5,
     ID: "Pid_0000011",
@@ -398,7 +432,7 @@ export const AllProducts: ProductType[] = [
 
   {
     name: "Asus FHD Gaming Laptop",
-    amount: 700,
+    price: 700,
     images: [asus_gaming_pc],
     rating: 3.5,
     ID: "Pid_0000012",
@@ -407,7 +441,7 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "Curology Product Set",
-    amount: 500,
+    price: 500,
     images: [curology_product_set],
     rating: 1.5,
     ID: "Pid_0000013",
@@ -417,7 +451,7 @@ export const AllProducts: ProductType[] = [
   },
   {
     name: "Kids Electric Car",
-    amount: 960,
+    price: 960,
     images: [kid_electric_car],
     rating: 4.5,
     ID: "Pid_0000014",
@@ -429,7 +463,7 @@ export const AllProducts: ProductType[] = [
 
   {
     name: "Jr. Zoom Soccer Cleats",
-    amount: 1160,
+    price: 1160,
     images: [jr_zoom_soccer_cleats],
     rating: 3.5,
     ID: "Pid_0000015",
@@ -440,7 +474,7 @@ export const AllProducts: ProductType[] = [
 
   {
     name: "GP11 Shooter USB Gamepad",
-    amount: 660,
+    price: 660,
     images: [gp11_prd3],
     rating: 4.5,
     ID: "Pid_0000016",
@@ -452,7 +486,7 @@ export const AllProducts: ProductType[] = [
 
   {
     name: "Quilted Satin Jacket",
-    amount: 660,
+    price: 660,
     images: [quilted_satin_jacket],
     rating: 5.5,
     ID: "Pid_0000017",

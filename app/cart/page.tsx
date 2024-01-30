@@ -2,18 +2,59 @@
 
 import { useContext } from "react";
 import { AppContext } from "../Context/appContext";
-import { ProductType } from "@/type.d";
 import Image from "next/image";
 import { IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
 import Link from "next/link";
-import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
+import {
+  BreadcrumbItem,
+  Breadcrumbs,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@nextui-org/react";
 
 export default function Page() {
   const { cart } = useContext(AppContext);
 
-  const cartTotal = cart
-    ?.map((val: any) => val.amount)
-    .reduce((prevVal, currentVal) => prevVal + currentVal);
+  //calc item total
+  const itemTotals = cart.reduce((acc, item) => {
+    const existingItem = acc.find((i) => i.ID === item.ID);
+    if (existingItem) {
+      existingItem.total += item.price * item.quantity;
+    } else {
+      acc.push({
+        productId: item.ID,
+        total: item.price * item.quantity,
+      });
+    }
+    return acc;
+  }, [] as { productId: string; total: number }[]);
+
+  //calculate grand total
+  const cartTotal = itemTotals.reduce((total, item) => total + item.total, 0);
+
+  const columns = [
+    {
+      key: "product",
+      label: "PRODUCT",
+    },
+    {
+      key: "price",
+      label: "PRICE",
+    },
+    {
+      key: "quantity",
+      label: "QUANTITY",
+    },
+    {
+      key: "subtotal",
+      label: "SUBTOTAL",
+    },
+  ];
 
   return (
     <div className="container mx-auto my-4  w-full h-auto p-2 space-y-8">
@@ -27,61 +68,71 @@ export default function Page() {
         <div className="space-y-8">
           {cart && cart?.length ? (
             <>
-              <div className="flex justify-between items-center shadow p-4 shadow-gray-100">
-                <h4 className="basis-1/4 text-sm md:text-base lg:text-lg font-medium text-gray-600 text-center">
-                  Product
-                </h4>
-                <h4 className="basis-1/4 text-sm md:text-base lg:text-lg font-medium text-gray-600 text-center">
-                  Price
-                </h4>
-                <h4 className="basis-1/4 text-sm md:text-base lg:text-lg font-medium text-gray-600">
-                  Quantity
-                </h4>
-                <h4 className="basis-1/4 text-sm md:text-base lg:text-lg font-medium text-gray-600 text-center">
-                  Subtotal
-                </h4>
-              </div>
-              {cart.map((item: ProductType) => (
-                <div
-                  key={item.ID}
-                  className="flex justify-between items-center shadow p-4 shadow-gray-100"
-                >
-                  <div className="basis-1/4 flex items-center space-x-2">
-                    <Image
-                      src={item.images[0]}
-                      className="w-1/3 h-1/3 lg:w-20 lg:h-20"
-                      alt={`${item.name} image`}
-                    />
-                    <h4 className="text-xs md:text-sm lg:text-base  font-medium text-gray-500">
-                      {item.name}
-                    </h4>
-                  </div>
+              <Table isStriped aria-label="cart lists">
+                <TableHeader columns={columns}>
+                  {(column) => <TableColumn>{column.label}</TableColumn>}
+                </TableHeader>
+                <TableBody items={[...cart]}>
+                  {(item) => (
+                    <TableRow key={item.ID}>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <Image
+                            src={item?.images[0]}
+                            className="w-1/3 h-1/3 lg:w-20 lg:h-20"
+                            alt={`${item?.name} image`}
+                          />
+                          <h4 className="text-xs md:text-sm lg:text-base  font-medium text-gray-500">
+                            {item.name}
+                          </h4>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <h4 className="text-xs md:text-sm  font-medium lg:text-base text-gray-500 text-center">
+                          $ {item.price}
+                        </h4>
+                      </TableCell>
+                      <TableCell>
+                        <div className="shadow border border-gray-400  w-20 rounded flex items-center justify-center space-x-1">
+                          <input
+                            name="itemCount"
+                            defaultValue={item.quantity}
+                            className="flex-1 h-full block w-full bg-transparent border-0 text-sm shadow-sm text-center placeholder-slate-400 focus:ring-0"
+                            style={{ minHeight: "100%" }}
+                          />
+                          <div className="flex flex-col items-center justify-center space-y-1">
+                            <Button
+                              disableRipple
+                              variant="light"
+                              isIconOnly
+                              size="sm"
+                            >
+                              <IoChevronUpOutline className="w-3 h-3 text-gray-500" />
+                            </Button>
+                            <Button
+                              disableRipple
+                              variant="light"
+                              isIconOnly
+                              size="sm"
+                            >
+                              <IoChevronDownOutline className="w-3 h-3 text-gray-500" />
+                            </Button>
+                          </div>
+                        </div>
+                      </TableCell>
 
-                  <h4 className="basis-1/4 text-xs md:text-sm  font-medium lg:text-base text-gray-500 text-center">
-                    $ {item.amount}
-                  </h4>
-                  <div className="basis-1/4">
-                    <div className="shadow border border-gray-400 px-2  w-16 rounded flex items-center justify-center space-x-2">
-                      <input
-                        name="city"
-                        defaultValue="1"
-                        className="self-center block w-full bg-white border border-slate-300 rounded-md text-sm shadow-sm text-center placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                      />
-                      <div className="flex flex-col items-center justify-center space-y-1">
-                        <button>
-                          <IoChevronUpOutline className="w-3 h-3 text-gray-500" />
-                        </button>
-                        <button>
-                          <IoChevronDownOutline className="w-3 h-3 text-gray-500" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <h4 className="basis-1/4 text-xs md:text-sm lg:text-base font-medium text-gray-500 text-center">
-                    $ {item.amount}
-                  </h4>
-                </div>
-              ))}
+                      <TableCell>
+                        <h4 className="text-xs md:text-sm lg:text-base font-medium text-gray-500 text-center">
+                          {
+                            itemTotals.find((i) => i.productId === item.ID)
+                              ?.total
+                          }
+                        </h4>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
 
               <div className="flex justify-between items-center">
                 <button className="py-3 px-5 flex items-center justify-center text-xs md:text-sm lg:text-base font-medium text-gray-600 border border-gray-300">

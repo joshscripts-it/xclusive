@@ -7,8 +7,8 @@ export type PageProps = {
 export type ProductType = {
   ID: string;
   name: string;
-  amount: number;
-  prevAmount?: number;
+  price: number;
+  prevPrice?: number;
   images: any;
   rating: number;
   path: string;
@@ -23,8 +23,8 @@ export type ProductType = {
 export type TrendingProductsType = {
   ID: string;
   name: string;
-  amount: number;
-  prevAmount?: number;
+  price: number;
+  prevPrice?: number;
   image: any;
   rating: number;
   path: string;
@@ -35,8 +35,8 @@ export type TrendingProductsType = {
 export type ItemType = {
   ID: string;
   name: string;
-  amount: number;
-  prevAmount: number;
+  price: number;
+  prevPrice: number;
   image: any;
   rating: number;
   discount?: string;
@@ -79,9 +79,9 @@ export type LoginType = {
 export interface AllProductType {
   ID: string;
   name: string;
-  amount: number;
+  price: number;
   perc_discount?: number;
-  prevAmount?: number;
+  prevPrice?: number;
   images?: any[];
   rating: number;
   path: string;

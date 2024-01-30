@@ -131,7 +131,7 @@ const RelatedItemsComponent = ({
 export default function ProductDetails({ params: { id } }: PageProps) {
   //INTERNAL STATE
   const [visible, setVisible] = useState<Boolean>(true);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(2);
 
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel({});
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
@@ -142,6 +142,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
   const onThumbClick = useCallback(
     (index: number) => {
       if (!emblaMainApi || !emblaThumbsApi) return;
+
       emblaMainApi.scrollTo(index);
     },
     [emblaMainApi, emblaThumbsApi]
@@ -165,12 +166,14 @@ export default function ProductDetails({ params: { id } }: PageProps) {
   const isMatch = AllProducts.filter((product) => product.ID == id);
 
   const images: string[] = [];
-  isMatch[0]?.images?.forEach((img: any) => images.push(img));
+  isMatch[0]?.images.forEach((img: any) => images.push(img));
 
-  const imageByIndex = (index: number): string => images[index % images.length];
+  const imageByIndex = (index: number): string => images[index];
 
   const SLIDE_COUNT = images.length;
   const slides = Array.from(Array(SLIDE_COUNT).keys());
+
+  console.log("Image By Index: ", imageByIndex);
 
   const isSeen = visible ? (
     <IoEyeOutline className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-gray-700" />
@@ -277,7 +280,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
                 </div>
               </div>
               <div className="flex items-center space-x-6">
-                <p className="text-gray-500 text-sm lg:text-base">Sizes:</p>{" "}
+                <p className="text-gray-500 text-sm lg:text-base">Sizes:</p>
                 <div className="flex items-center space-x-2">
                   {isMatch[0].sizes?.map((size, _) => (
                     <button

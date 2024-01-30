@@ -59,7 +59,6 @@ export default function Page() {
             <IoStorefrontOutline className="text-gray-50 w-6 h-6" />
           </div>
           <h2 className="font-bold text-xl lg:text-2xl text-inherit">10.5k</h2>
-
           <span className="text-inherit text-base text-center text-gray-500 font-light">
             Active Sellers On Site
           </span>

@@ -140,7 +140,7 @@ export default function Page() {
         </header>
 
         {wishList?.length ? (
-          <div className="flex space-x-6 items-center mb-6 overflow-x-auto">
+          <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto">
             {wishList.map((item: ProductType) => (
               <JustForYouComponent isSeen={isSeen} item={item} key={item.ID} />
             ))}

@@ -61,6 +61,7 @@ import {
   Listbox,
   ListboxItem,
 } from "@nextui-org/react";
+// import { BrowseByCategoryCarousel } from "@/components/ui/carousel";
 
 const sideNav = [
   {
@@ -568,7 +569,7 @@ const BrowseByCategoryComponent = ({
   categories: CategoryType[];
 }) => {
   return (
-    <div className="w-full pt-16 flex flex-col justify-center px-4 space-y-4  mx-auto ">
+    <div className="w-full pt-16 flex flex-col justify-center px-2 space-y-4  mx-auto ">
       <div className="ml-4">
         {/* Bullet  */}
         <div className="flex items-center space-x-2">
@@ -613,9 +614,10 @@ const BrowseByCategoryComponent = ({
           <Link
             href={category.path}
             key={category.id}
-            className="px-10 py-5 text-gray-600 border border-gray-200 rounded-sm flex flex-col items-center justify-center hover:bg-red-500 hover:text-gray-100 space-y-2  "
+            className="px-10 py-5 text-gray-600 border border-gray-200 rounded-sm flex flex-col items-center justify-center hover:bg-red-500 hover:text-gray-100 space-y-2"
+            style={{ maxWidth: 170, minWidth: 170, height: 145 }}
           >
-            <category.logo className="w-4 h-4 lg:w-5 lg:h-5" />
+            <category.logo className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8" />
             <span className="text-inherit text-ellipsis text-sm lg:text-base">
               {category.type}
             </span>
@@ -1170,6 +1172,7 @@ export default function Home() {
         <FlashSalesComponent shopList={shopList} isSeen={isSeen} />
 
         <BrowseByCategoryComponent categories={Categories} />
+        {/* <BrowseByCategoryCarousel /> */}
         <BestSellingComponent isSeen={isSeen} bestSelling={bestSelling} />
       </div>
       <div className="container mx-auto flex flex-col justify-between items-center">
