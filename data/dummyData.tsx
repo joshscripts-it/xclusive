@@ -14,7 +14,7 @@ import gp11_prd3 from "../assets/images/GP11_PRD3 1.png";
 import kid_electric_car from "../assets/images/kid_electric_car.png";
 import jr_zoom_soccer_cleats from "../assets/images/jr_zoom_soccer_cleats.png";
 import quilted_satin_jacket from "../assets/images/quilted_satin_jacket.png";
-import { ItemType, ProductType } from "@/type.d";
+import { CartItemType, ItemType, ProductType } from "@/type.d";
 
 export const DummyUsers = [
   {
@@ -176,7 +176,7 @@ export const Shoplist: ProductType[] = [
   },
 ];
 
-export const Cart = [
+export const Cart: CartItemType[] = [
   {
     name: "HAVIT HV-G92 Gamepad",
     price: 120,

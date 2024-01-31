@@ -15,6 +15,86 @@ import {
 import { ItemType, ProductType } from "@/type.d";
 import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
 
+const WishListItem = ({ item }: { item: ProductType }) => {
+  return (
+    //@FlashItem
+    <Card
+      id="card"
+      shadow="none"
+      style={{ maxWidth: 350, minWidth: 200, width: 350 }}
+    >
+      <CardBody
+        className="p-0 bg-gray-200 relative rounded-b-lg overflow-hidden w-full"
+        style={{ height: 250, minHeight: 250, maxHeight: 250 }}
+      >
+        <div className="relative w-full h-60 py-6 flex items-center justify-center">
+          {item?.discount && (
+            <Button
+              disableAnimation
+              size="sm"
+              variant="faded"
+              radius="sm"
+              className="absolute border-none left-4 top-4 bg-red-600 text-xs text-gray-50"
+              style={{ width: 40, height: 26 }}
+            >
+              - {item.discount}%
+            </Button>
+          )}
+
+          <Image
+            src={item.images[0]}
+            alt={item.name}
+            className="max-w-sm w-auto h-3/5"
+            priority={true}
+          />
+          <div className="absolute top-4 right-2 flex flex-col space-y-1">
+            <Button
+              disableAnimation
+              isIconOnly
+              size="sm"
+              variant="solid"
+              className="bg-gray-50 border-none"
+              radius="full"
+            >
+              <IoTrashOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+            </Button>
+          </div>
+        </div>
+        <Button
+          disableAnimation
+          variant="flat"
+          className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+        >
+          Add To Cart
+        </Button>
+      </CardBody>
+
+      <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
+        <div className="flex flex-col space-y-2">
+          <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
+          <div className="flex space-x-2">
+            <h4 className="text-base font-medium text-red-500 ">
+              $ {item.price}
+            </h4>
+            {item?.discount && (
+              <h4 className="text-base font-medium text-gray-400 line-through">
+                $ {item.discount}
+              </h4>
+            )}
+          </div>
+
+          <span className="flex space-x-1">
+            {item.rating &&
+              Array.from(Array(Math.floor(item.rating))).map((id) => (
+                <IoStar className="text-yellow-500" key={item.ID} />
+              ))}
+          </span>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
+
 const JustForYouComponent = ({
   item,
   isSeen,
@@ -115,7 +195,7 @@ export default function Page() {
   // App Internal State
   const [visible, setVisible] = useState<Boolean>(true);
 
-  const { shopList, setCart, cart, wishList } = useContext(AppContext);
+  const { shopList, wishList } = useContext(AppContext);
 
   const isSeen = visible ? (
     <IoEyeOutline className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6 text-gray-700" />
@@ -142,7 +222,7 @@ export default function Page() {
         {wishList?.length ? (
           <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto">
             {wishList.map((item: ProductType) => (
-              <JustForYouComponent isSeen={isSeen} item={item} key={item.ID} />
+              <WishListItem item={item} key={item.ID} />
             ))}
           </div>
         ) : (

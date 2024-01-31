@@ -3,7 +3,6 @@
 import React, { createContext, useState } from "react";
 import {
   DummyUsers,
-  Products,
   Shoplist,
   Cart,
   Bestselling,
@@ -13,7 +12,7 @@ import {
 
 import {
   AppContextInterface,
-  ItemType,
+  CartItemType,
   LoginType,
   ProductType,
   UserType,
@@ -27,7 +26,7 @@ export const AppContextProvider = (props: any) => {
   /*===========================================
              APP  GLOBAL  STATE
     ===========================================*/
-  const [cart, setCart] = useState<ProductType[]>([...Cart]);
+  const [cart, setCart] = useState<CartItemType[]>([...Cart]);
   const [bestSelling, setBestSelling] = useState<ProductType[]>([
     ...Bestselling,
   ]);

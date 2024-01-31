@@ -10,14 +10,14 @@ export default function Page() {
         <BreadcrumbItem>contact</BreadcrumbItem>
       </Breadcrumbs>
 
-      <div className="flex items-start  justify-between space-x-4 lg:space-x-6">
-        <div className="flex flex-col w-5/12 md:w-4/12 lg:w-3/12 items-start justify-center shadow-md p-6 space-y-16 divide-y divide-gray-400">
+      <div className="flex items-start  justify-between  lg:space-x-6 flex-wrap md:flex-nowrap space-y-6 md:space-y-0 md:space-x-10">
+        <div className="flex flex-col basis-full md:flex-1 w-5/12 md:w-4/12 lg:w-3/12 items-start justify-center shadow-md p-6 space-y-16 divide-y divide-gray-400">
           <div className="flex-1 flex flex-col space-y-4  w-full">
             <div className="flex items-center space-x-6">
               <div className="p-2 rounded-full bg-red-500">
                 <IoCallOutline className="w-4 h-4 lg:w-6 lg:h-6 text-gray-50 font-bold" />
               </div>
-              <h2 className="text-gray-700 text-sm lg:text-base font-medium text-ellipsis overflow-hidden">
+              <h2 className="text-gray-700 text-sm lg:text-base font-semibold text-ellipsis overflow-hidden">
                 Call To Us
               </h2>
             </div>
@@ -34,7 +34,7 @@ export default function Page() {
               <div className="p-2 rounded-full bg-red-500">
                 <IoMailOutline className="w-4 h-4 lg:w-6 lg:h-6 text-gray-50 font-bold" />
               </div>
-              <h2 className="text-gray-700 text-sm lg:text-base font-medium text-ellipsis overflow-hidden">
+              <h2 className="text-gray-700 text-sm lg:text-base font-semibold text-ellipsis overflow-hidden">
                 Write To Us
               </h2>
             </div>
@@ -51,7 +51,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="flex-1  p-6 space-y-16 shadow-sm">
+        <div className="basis-full w-full md:basis-4/5 space-y-16 shadow-sm">
           <form className="flex flex-col space-y-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <label className="block flex-1">

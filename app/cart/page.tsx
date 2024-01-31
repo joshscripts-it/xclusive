@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { AppContext } from "../Context/appContext";
 import Image from "next/image";
 import { IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
@@ -15,8 +15,8 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  getKeyValue,
 } from "@nextui-org/react";
+import { CartItemType, ItemTotalType } from "@/type";
 
 export default function Page() {
   const [coupon, setCoupon] = useState<string>("");
@@ -26,29 +26,35 @@ export default function Page() {
     if (!coupon) {
       return alert("Please enter coupon code");
     }
-
     alert("Coupon applied successfully!");
   };
 
   //calc item total
-  const itemTotals =
-    cart &&
-    cart.reduce((acc, item) => {
-      const existingItem = acc.find((i) => i.ID === item?.ID);
-      if (existingItem) {
-        existingItem.total += item?.price * item?.quantity;
-      } else {
-        acc.push({
-          productId: item?.ID,
-          total: item?.price * item?.quantity,
-        });
-      }
-      return acc;
-    }, [] as { productId: string; total: number }[]);
+  const itemTotals = useMemo(() => {
+    const itemTotal =
+      cart &&
+      cart.reduce((acc: any[], item: CartItemType) => {
+        const existingItem = acc.find((i: any) => i.productId === item?.ID);
+
+        if (existingItem) {
+          existingItem.total += item?.price * item?.quantity;
+        } else {
+          acc.push({
+            productId: item?.ID,
+            total: item?.price * item?.quantity,
+          });
+        }
+        return acc;
+      }, [] as ItemTotalType[]);
+
+    return itemTotal;
+  }, [cart]);
 
   //calculate grand total
-  const cartTotal =
-    itemTotals && itemTotals.reduce((total, item) => total + item.total, 0);
+  const cartTotal = itemTotals?.reduce(
+    (total: any, item: any) => total + item.total,
+    0
+  );
 
   const columns = [
     {
@@ -89,19 +95,16 @@ export default function Page() {
                 <TableHeader columns={columns}>
                   {(column) => <TableColumn>{column.label}</TableColumn>}
                 </TableHeader>
-                <TableBody items={[...cart]}>
-                  {(item) => (
+                <TableBody items={cart}>
+                  {(item: CartItemType) => (
                     <TableRow key={item.ID}>
-                      {(columnsKey) => {
-                        console.log(getKeyValue(item, columnsKey));
-                        return <div />;
-                      }}
                       <TableCell>
                         <div className="flex items-center space-x-2">
                           <Image
                             src={item?.images[0]}
                             className="w-1/3 h-1/3 lg:w-20 lg:h-20"
                             alt={`${item?.name} image`}
+                            priority={true}
                           />
                           <h4 className="text-xs md:text-sm lg:text-base  font-medium text-gray-500">
                             {item.name}
@@ -123,7 +126,7 @@ export default function Page() {
                         >
                           <input
                             name="itemCount"
-                            defaultValue={item.quantity}
+                            defaultValue={item?.quantity}
                             className="flex-1 h-full block w-full bg-transparent border-0 text-xs md:text-sm  font-medium lg:text-base shadow-sm text-center placeholder-slate-400 focus:ring-0"
                           />
                           <div className="flex flex-col items-center justify-center">
@@ -155,8 +158,9 @@ export default function Page() {
                         <h4 className="text-xs md:text-sm lg:text-base font-medium text-gray-500 text-center">
                           ${" "}
                           {itemTotals &&
-                            itemTotals.find((i) => i.productId === item.ID)
-                              ?.total}
+                            itemTotals?.find(
+                              (i: any) => i.productId === item.ID
+                            )?.total}
                         </h4>
                       </TableCell>
                     </TableRow>

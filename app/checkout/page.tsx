@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import Image from "next/image";
 import { AppContext } from "../Context/appContext";
 import master_card from "../../assets/images/master.png";
@@ -14,6 +14,7 @@ import {
   Radio,
   RadioGroup,
 } from "@nextui-org/react";
+import { CartItemType, ItemTotalType, ProductType } from "@/type";
 
 export default function Page() {
   const [coupon, setCoupon] = useState<string>("");
@@ -29,25 +30,31 @@ export default function Page() {
   };
 
   //calc item total
-  const itemTotals =
-    cart &&
-    cart.reduce((acc, item) => {
-      const existingItem = acc.find((i) => i.ID === item?.ID);
-      if (existingItem) {
-        existingItem.total += item?.price * item?.quantity;
-      } else {
-        acc.push({
-          productId: item?.ID,
-          total: item?.price * item?.quantity,
-        });
-      }
-      return acc;
-    }, [] as { productId: string; total: number }[]);
+  const itemTotals = useMemo(() => {
+    const itemTotal =
+      cart &&
+      cart.reduce((acc: any[], item: CartItemType) => {
+        const existingItem = acc.find((i: any) => i.productId === item?.ID);
+
+        if (existingItem) {
+          existingItem.total += item?.price * item?.quantity;
+        } else {
+          acc.push({
+            productId: item?.ID,
+            total: item?.price * item?.quantity,
+          });
+        }
+        return acc;
+      }, [] as ItemTotalType[]);
+
+    return itemTotal;
+  }, [cart]);
 
   //calculate grand total
-  const cartTotal =
-    itemTotals && itemTotals.reduce((total, item) => total + item.total, 0);
-
+  const cartTotal = itemTotals?.reduce(
+    (total: any, item: any) => total + item.total,
+    0
+  );
   return (
     <div className="container mx-auto  w-full h-auto p-8 space-y-8">
       {/* Breadcrumb */}
@@ -171,8 +178,8 @@ export default function Page() {
               >
                 <Radio value="Bank">
                   <div className="flex w-full space-x-4 justify-between items-center">
-                    <h4>Bank</h4>
-                    <div className="flex items-center justify-end space-x-4">
+                    <h4 className="basis-2/5">Bank</h4>
+                    <div className="flex basis-3/5 items-center justify-end space-x-4">
                       <Image src={master_card} alt="card master" />
                       <Image src={visa_card} alt="card master" />
                       <Image src={bkash_card} alt="card master" />
@@ -199,12 +206,14 @@ export default function Page() {
                   size="lg"
                   className="p-4 flex items-center justify-center text-base md:text-sm lg:text-base text-gray-50 bg-red-500 rounded font-medium"
                   onPress={handleApplyCoupon}
+                  disableAnimation
                 >
                   Apply Code
                 </Button>
               </div>
 
               <Button
+                disableAnimation
                 color="danger"
                 size="lg"
                 className="self-start py-1 px-5 w-full  md:w-auto lg:w-48 h-14 flex items-center justify-center text-base lg:text-lg text-gray-50 bg-red-500 rounded font-medium"

@@ -68,7 +68,7 @@ const RelatedItemsComponent = ({
             src={item.images[0]}
             alt={item.name}
             className="max-w-sm w-auto h-3/5"
-            priority={true}
+            loading="lazy"
           />
           <div className="absolute top-4 right-2 flex flex-col space-y-1">
             <Button
@@ -173,8 +173,6 @@ export default function ProductDetails({ params: { id } }: PageProps) {
   const SLIDE_COUNT = images.length;
   const slides = Array.from(Array(SLIDE_COUNT).keys());
 
-  console.log("Image By Index: ", imageByIndex);
-
   const isSeen = visible ? (
     <IoEyeOutline className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-gray-700" />
   ) : (
@@ -245,7 +243,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
         <div className="block basis-full md:basis-5/12 lg:basis-6/12">
           <div className="flex flex-col space-y-8">
             <div className="space-y-2 border-b border-b-gray-300 py-4">
-              <h2 className="text-gray-700 text-base lg:text-xl font-medium">
+              <h2 className="text-gray-700 text-lg lg:text-2xl font-semibold">
                 {isMatch[0].name}
               </h2>
 
@@ -325,7 +323,12 @@ export default function ProductDetails({ params: { id } }: PageProps) {
 
             <div className="flex flex-col justify-center items-stretch divide-y border border-gray-300 rounded-md">
               <div className="flex items-center justify-start space-x-4 p-4">
-                <Image src={van_icon} className="w-8 h-8" alt="logo van" />
+                <Image
+                  src={van_icon}
+                  className="w-8 h-8"
+                  alt="logo van"
+                  loading="lazy"
+                />
                 <div>
                   <h4 className="text-gray-700 text-base font-medium">
                     Free Delivery
@@ -337,7 +340,12 @@ export default function ProductDetails({ params: { id } }: PageProps) {
               </div>
 
               <div className="flex items-center justify-start space-x-4 p-4">
-                <Image src={reload_icon} className="w-8 h-8" alt="logo van" />
+                <Image
+                  src={reload_icon}
+                  className="w-8 h-8"
+                  alt="logo van"
+                  loading="lazy"
+                />
                 <div>
                   <h4 className="text-gray-700 text-base lg:text font-medium">
                     Return Delivery

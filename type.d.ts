@@ -4,6 +4,29 @@ export type PageProps = {
   params: { id: string | number };
 };
 
+export type CartItemType = {
+  ID: string;
+  name: string;
+  price: number;
+  prevPrice?: number;
+  images: any;
+  rating: number;
+  path: string;
+  isNew?: boolean;
+  discount?: string;
+  images?: any[];
+  colors?: string[];
+  sizes?: string[];
+  ratersCount?: number;
+  quantity: number;
+  total?: number;
+  productId?: string;
+};
+
+export type ItemTotalType = {
+  productId: string;
+  total: number;
+};
 export type ProductType = {
   ID: string;
   name: string;
@@ -18,6 +41,8 @@ export type ProductType = {
   colors?: string[];
   sizes?: string[];
   ratersCount?: number;
+  quantity?: number;
+  inStock?: boolean;
 };
 
 export type TrendingProductsType = {
