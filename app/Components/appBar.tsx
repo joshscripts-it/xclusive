@@ -29,10 +29,6 @@ import {
 } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 
-type NavlistType = {
-  handleClose: (arg: boolean) => any;
-};
-
 export const AppbarComponent = () => {
   // #@Internal state
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -265,7 +261,5 @@ export const AppbarComponent = () => {
         )}
       </NavbarContent>
     </Navbar>
-    //   </div>
-    // </div>
   );
 };

@@ -544,7 +544,7 @@ const FlashSalesComponent = ({
       </div>
 
       <div
-        className="flex items-stretch
+        className="flex items-stretch scrollbar-hide
       overflow-x-auto relative space-x-4  p-1 w-full"
       >
         {/* <div className="embla">
@@ -609,7 +609,7 @@ const BrowseByCategoryComponent = ({
       </div>
 
       {/* items */}
-      <div className="flex items-center space-x-4 overflow-x-auto px-2 pb-4">
+      <div className="flex items-center space-x-4 overflow-x-auto px-2 pb-4 scrollbar-hide">
         {categories.map((category: CategoryType, _) => (
           <Link
             href={category.path}
@@ -762,7 +762,7 @@ const BestSellingComponent = ({
       {/* items */}
       <div
         className="flex items-stretch
-      overflow-x-auto relative space-x-4  p-1 w-full"
+      overflow-x-auto relative space-x-4  p-1 w-full scrollbar-hide"
       >
         {bestSelling.map((item: ProductType, _) => (
           <RenderBestSellingItem item={item} key={item.ID} />

@@ -369,7 +369,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
           </h4>
         </div>
 
-        <div className="flex space-x-4 items-stretch overflow-x-auto">
+        <div className="flex space-x-4 items-stretch overflow-x-auto scrollbar-hide">
           {shopList.map((item: ProductType) => (
             <RelatedItemsComponent item={item} key={item.ID} isSeen={isSeen} />
           ))}

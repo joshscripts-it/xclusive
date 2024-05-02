@@ -220,7 +220,7 @@ export default function Page() {
         </header>
 
         {wishList?.length ? (
-          <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto">
+          <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto scrollbar-hide">
             {wishList.map((item: ProductType) => (
               <WishListItem item={item} key={item.ID} />
             ))}
@@ -246,7 +246,7 @@ export default function Page() {
             See All
           </button>
         </header>
-        <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto">
+        <div className="flex space-x-6 items-stretch mb-6 overflow-x-auto scrollbar-hide">
           {shopList.map((item: ProductType) => (
             <JustForYouComponent isSeen={isSeen} item={item} key={item.ID} />
           ))}

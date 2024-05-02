@@ -21,7 +21,11 @@ const config: Config = {
   },
   darkMode: "class",
 
-  plugins: [require("@tailwindcss/forms"), nextui({ addCommonColors: true })],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("tailwind-scrollbar-hide"),
+    nextui({ addCommonColors: true }),
+  ],
 };
 
 export default config;
