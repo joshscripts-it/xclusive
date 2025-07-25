@@ -176,38 +176,7 @@ export const Shoplist: ProductType[] = [
   },
 ];
 
-export const Cart: CartItemType[] = [
-  {
-    name: "HAVIT HV-G92 Gamepad",
-    price: 120,
-    prevPrice: 160,
-    rating: 5,
-    images: [havit_hv_g92_gamepad, havit_hv_g92_gamepad, havit_hv_g92_gamepad],
-    ID: "Pid_000001",
-    discount: "40",
-    path: "/products",
-    colors: ["red", "black", "orange", "blue"],
-    sizes: ["S", "M", "L"],
-    quantity: 2,
-  },
-  {
-    name: "AK-900 Wired Keyboard",
-    price: 960,
-    prevPrice: 1160,
-    rating: 4,
-    images: [
-      ak_900_wired_keyboard,
-      ak_900_wired_keyboard,
-      ak_900_wired_keyboard,
-    ],
-    ID: "Pid_000002",
-    discount: "35",
-    path: "/products",
-    sizes: ["M", "L"],
-    colors: ["black", "#CC3"],
-    quantity: 3,
-  },
-];
+export const Cart: string[] = ["Pid_000001", "Pid_000002"];
 
 export const Bestselling: ProductType[] = [
   {
@@ -268,50 +237,10 @@ export const Bestselling: ProductType[] = [
 ];
 
 export const Wishlist = [
-  {
-    name: "S-Series Comfort Chair",
-    price: 375,
-    prevPrice: 400,
-    rating: 5.5,
-    images: [s_series_confort_chair],
-    ID: "Pid_000004",
-    discount: "25",
-    path: "/products",
-    sizes: ["S", "M"],
-    colors: ["black"],
-  },
-  {
-    name: "IPS LCD Gaming Monitor",
-    price: 370,
-    prevPrice: 400,
-    rating: 5.5,
-    images: [ips_lcd_gaming_monitor],
-    ID: "Pid_000003",
-    discount: "30",
-    path: "/products",
-    colors: ["black", "coral"],
-  },
-
-  {
-    name: "The North Coat",
-    price: 260,
-    prevPrice: 360,
-    rating: 3.5,
-    images: [north_coat],
-    ID: "Pid_000005",
-    path: "/products",
-    colors: ["red", "black", "orange"],
-    sizes: ["S", "M", "L"],
-  },
-  {
-    name: "Asus FHD Gaming Laptop",
-    price: 700,
-    images: [asus_gaming_pc],
-    rating: 3.5,
-    ID: "Pid_0000012",
-    path: "/products",
-    colors: ["white", "red"],
-  },
+  "Pid_000004",
+  "Pid_000003",
+  "Pid_000005",
+  "Pid_0000012",
 ];
 
 export const AllProducts: ProductType[] = [

@@ -9,12 +9,13 @@ import {
   IoAddOutline,
   IoEyeOffOutline,
   IoEyeOutline,
+  IoHeart,
   IoHeartOutline,
   IoRemoveOutline,
   IoStar,
 } from "react-icons/io5";
-import reload_icon from "../../../assets/icons/reload.svg";
-import van_icon from "../../../assets/icons/van.svg";
+import reload_icon from "@/assets/icons/reload.svg";
+import van_icon from "@/assets/icons/van.svg";
 import Link from "next/link";
 
 import useEmblaCarousel from "embla-carousel-react";
@@ -39,6 +40,14 @@ const RelatedItemsComponent = ({
   item: ProductType;
   isSeen: React.ReactNode;
 }) => {
+  const {
+    addOrRemoveProdFromWishList,
+    isOnWishList,
+    addToCart,
+    isProdOnCart,
+    removeFromCart,
+  } = useContext(AppContext);
+
   return (
     //@FlashItem
     <Card
@@ -78,8 +87,13 @@ const RelatedItemsComponent = ({
               variant="solid"
               className="bg-gray-50 border-none"
               radius="full"
+              onClick={() => addOrRemoveProdFromWishList(item.ID)}
             >
-              <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+              {isOnWishList(item.ID) ? (
+                <IoHeart className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
+              ) : (
+                <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+              )}
             </Button>
             <Button
               disableAnimation
@@ -93,16 +107,30 @@ const RelatedItemsComponent = ({
             </Button>
           </div>
         </div>
-        <Button
-          disableAnimation
-          variant="flat"
-          className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
-        >
-          Add To Cart
-        </Button>
+        {isProdOnCart(item.ID) ? (
+          <Button
+            onClick={() => removeFromCart(item.ID)}
+            disableAnimation
+            disableRipple
+            variant="flat"
+            className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
+          >
+            REMOVE FROM CART
+          </Button>
+        ) : (
+          <Button
+            onClick={() => addToCart(item.ID)}
+            disableAnimation
+            disableRipple
+            variant="flat"
+            className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+          >
+            ADD TO CART
+          </Button>
+        )}
       </CardBody>
 
-      <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
+      <CardFooter as={Link} href={`${item.path}/${item.name}/${item.ID}`}>
         <div className="flex flex-col space-y-2">
           <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
           <div className="flex space-x-2">
@@ -119,7 +147,10 @@ const RelatedItemsComponent = ({
           <span className="flex space-x-1">
             {item.rating &&
               Array.from(Array(Math.floor(item.rating))).map((id) => (
-                <IoStar className="text-yellow-500" key={item.ID} />
+                <IoStar
+                  className="text-yellow-500"
+                  key={item.ID + Math.random()}
+                />
               ))}
           </span>
         </div>
@@ -132,6 +163,8 @@ export default function ProductDetails({ params: { id } }: PageProps) {
   //INTERNAL STATE
   const [visible, setVisible] = useState<Boolean>(true);
   const [selectedIndex, setSelectedIndex] = useState(2);
+
+  const { addOrRemoveProdFromWishList, isOnWishList } = useContext(AppContext);
 
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel({});
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
@@ -315,8 +348,13 @@ export default function ProductDetails({ params: { id } }: PageProps) {
                   isIconOnly
                   variant="solid"
                   className="bg-gray-50 border-none"
+                  onClick={() => addOrRemoveProdFromWishList(isMatch[0].ID)}
                 >
-                  <IoHeartOutline className="w-5 h-5  text-gray-500" />
+                  {isOnWishList(isMatch[0].ID) ? (
+                    <IoHeart className="w-5 h-5  text-red-500" />
+                  ) : (
+                    <IoHeartOutline className="w-5 h-5  text-gray-500" />
+                  )}
                 </Button>
               </div>
             </div>

@@ -20,7 +20,8 @@ import { CartItemType, ItemTotalType } from "@/type";
 
 export default function Page() {
   const [coupon, setCoupon] = useState<string>("");
-  const { cart } = useContext(AppContext);
+  const { cart, products } = useContext(AppContext);
+  const cartList: CartItemType[] = [];
 
   const handleApplyCoupon = () => {
     if (!coupon) {
@@ -29,11 +30,20 @@ export default function Page() {
     alert("Coupon applied successfully!");
   };
 
+  if (cart?.length && products?.length) {
+    for (let i in cart) {
+      // newWishList.push(products[i].ID == wishList[i]);
+      let found = products.filter((product) => product?.ID == cart[i]);
+
+      cartList.push(...found);
+    }
+  }
+
   //calc item total
   const itemTotals = useMemo(() => {
     const itemTotal =
-      cart &&
-      cart.reduce((acc: any[], item: CartItemType) => {
+      cartList &&
+      cartList.reduce((acc: any[], item: CartItemType) => {
         const existingItem = acc.find((i: any) => i.productId === item?.ID);
 
         if (existingItem) {
@@ -48,7 +58,7 @@ export default function Page() {
       }, [] as ItemTotalType[]);
 
     return itemTotal;
-  }, [cart]);
+  }, [cartList]);
 
   //calculate grand total
   const cartTotal = itemTotals?.reduce(
@@ -85,7 +95,7 @@ export default function Page() {
 
       <div>
         <div className="space-y-8 ">
-          {cart && cart?.length ? (
+          {cartList && cartList?.length ? (
             <>
               <Table
                 isStriped
@@ -95,7 +105,7 @@ export default function Page() {
                 <TableHeader columns={columns}>
                   {(column) => <TableColumn>{column.label}</TableColumn>}
                 </TableHeader>
-                <TableBody items={cart}>
+                <TableBody items={cartList}>
                   {(item: CartItemType) => (
                     <TableRow key={item.ID}>
                       <TableCell>

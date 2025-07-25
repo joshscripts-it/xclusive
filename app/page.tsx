@@ -40,6 +40,7 @@ import {
   IoBicycleOutline,
   IoFitnessOutline,
   IoColorWandOutline,
+  IoHeart,
 } from "react-icons/io5";
 
 import {
@@ -66,7 +67,7 @@ import {
 const sideNav = [
   {
     name: "Women's Fashion",
-    path: "/fashion/women",
+    path: "/category/fashion/women",
     hasArrow: true,
     icon: <IoWomanOutline />,
     id: "side_nav_1",
@@ -118,7 +119,7 @@ const sideNav = [
     name: "Health & Beauty",
     path: "/health",
     icon: <IoFitnessOutline />,
-    id: "side_nav_8",
+    id: "side_nav_9",
   },
 ];
 
@@ -406,7 +407,15 @@ const FlashSalesComponent = ({
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, []);
 
-  const FlashItem = ({ item }: { item: ProductType }) => {
+  const FlashSalesItem = ({ item }: { item: ProductType }) => {
+    const {
+      addOrRemoveProdFromWishList,
+      isOnWishList,
+      addToCart,
+      isProdOnCart,
+      removeFromCart,
+    } = useContext(AppContext);
+
     return (
       //@FlashItem
       <Card
@@ -446,8 +455,13 @@ const FlashSalesComponent = ({
                 variant="solid"
                 className="bg-gray-50 border-none"
                 radius="full"
+                onClick={() => addOrRemoveProdFromWishList(item.ID)}
               >
-                <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                {isOnWishList(item.ID) ? (
+                  <IoHeart className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
+                ) : (
+                  <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+                )}
               </Button>
               <Button
                 disableAnimation
@@ -461,16 +475,28 @@ const FlashSalesComponent = ({
               </Button>
             </div>
           </div>
-          <Button
-            disableAnimation
-            variant="flat"
-            className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
-          >
-            Add To Cart
-          </Button>
+          {isProdOnCart(item.ID) ? (
+            <Button
+              disableAnimation
+              variant="flat"
+              className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
+              onClick={() => removeFromCart(item.ID)}
+            >
+              REMOVE FROM CART
+            </Button>
+          ) : (
+            <Button
+              disableAnimation
+              variant="flat"
+              className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+              onClick={() => addToCart(item.ID)}
+            >
+              ADD TO CART
+            </Button>
+          )}
         </CardBody>
 
-        <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
+        <CardFooter as={Link} href={`${item.path}/${item.name}/${item.ID}`}>
           <div className="flex flex-col space-y-2">
             <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
             <div className="flex space-x-2">
@@ -487,7 +513,10 @@ const FlashSalesComponent = ({
             <span className="flex space-x-1">
               {item.rating &&
                 Array.from(Array(Math.floor(item.rating))).map((id) => (
-                  <IoStar className="text-yellow-500" key={item.ID} />
+                  <IoStar
+                    className="text-yellow-500"
+                    key={item.ID + Math.random()}
+                  />
                 ))}
             </span>
           </div>
@@ -550,7 +579,7 @@ const FlashSalesComponent = ({
         {/* <div className="embla">
           <div className="embla_container"> */}
         {shopList.map((item: ItemType, _) => (
-          <FlashItem item={item} key={item.ID} />
+          <FlashSalesItem item={item} key={item.ID} />
         ))}
         {/* </div>
         </div> */}
@@ -642,95 +671,127 @@ const BestSellingComponent = ({
   bestSelling: ProductType[];
   isSeen: React.ReactNode;
 }) => {
-  const RenderBestSellingItem = ({ item }: { item: ProductType }) => (
-    //@FlashItem
-    <Card
-      id="card"
-      shadow="none"
-      isPressable
-      style={{ maxWidth: 350, minWidth: 200, width: 350 }}
-    >
-      <CardBody
-        className="p-0 bg-gray-200 relative rounded-b-lg overflow-hidden w-full"
-        style={{ height: 250, minHeight: 250, maxHeight: 250 }}
+  const {
+    addOrRemoveProdFromWishList,
+    isOnWishList,
+    addToCart,
+    isProdOnCart,
+    removeFromCart,
+  } = useContext(AppContext);
+
+  const RenderBestSellingItem = ({ item }: { item: ProductType }) => {
+    return (
+      //@FlashItem
+      <Card
+        id="card"
+        shadow="none"
+        isPressable
+        style={{ maxWidth: 350, minWidth: 200, width: 350 }}
       >
-        <div className="relative w-full h-60 py-6 flex items-center justify-center">
-          {item?.discount && (
+        <CardBody
+          className="p-0 bg-gray-200 relative rounded-b-lg overflow-hidden w-full"
+          style={{ height: 250, minHeight: 250, maxHeight: 250 }}
+        >
+          <div className="relative w-full h-60 py-6 flex items-center justify-center">
+            {item?.discount && (
+              <Button
+                disableAnimation
+                size="sm"
+                variant="faded"
+                radius="sm"
+                className="absolute border-none left-4 top-4 bg-red-600 text-xs text-gray-50"
+                style={{ width: 40, height: 26 }}
+              >
+                - {item.discount}%
+              </Button>
+            )}
+
+            <Image
+              src={item.images[0]}
+              alt={item.name}
+              className="max-w-sm w-auto h-3/5"
+              priority={true}
+            />
+            <div className="absolute top-4 right-2 flex flex-col space-y-1">
+              <Button
+                disableAnimation
+                isIconOnly
+                size="sm"
+                variant="solid"
+                className="bg-gray-50 border-none"
+                radius="full"
+                onClick={() => addOrRemoveProdFromWishList(item.ID)}
+              >
+                {isOnWishList(item.ID) ? (
+                  <IoHeart className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
+                ) : (
+                  <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                )}
+              </Button>
+              <Button
+                disableAnimation
+                radius="full"
+                isIconOnly
+                variant="solid"
+                size="sm"
+                className="bg-gray-50 border-none"
+              >
+                {isSeen}
+              </Button>
+            </div>
+          </div>
+
+          {isProdOnCart(item.ID) ? (
             <Button
+              onClick={() => removeFromCart(item.ID)}
               disableAnimation
-              size="sm"
-              variant="faded"
-              radius="sm"
-              className="absolute border-none left-4 top-4 bg-red-600 text-xs text-gray-50"
-              style={{ width: 40, height: 26 }}
+              disableRipple
+              variant="flat"
+              className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
             >
-              - {item.discount}%
+              REMOVE FROM CART
+            </Button>
+          ) : (
+            <Button
+              onClick={() => addToCart(item.ID)}
+              disableAnimation
+              disableRipple
+              variant="flat"
+              className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+            >
+              ADD TO CART
             </Button>
           )}
+        </CardBody>
 
-          <Image
-            src={item.images[0]}
-            alt={item.name}
-            className="max-w-sm w-auto h-3/5"
-            priority={true}
-          />
-          <div className="absolute top-4 right-2 flex flex-col space-y-1">
-            <Button
-              disableAnimation
-              isIconOnly
-              size="sm"
-              variant="solid"
-              className="bg-gray-50 border-none"
-              radius="full"
-            >
-              <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
-            </Button>
-            <Button
-              disableAnimation
-              radius="full"
-              isIconOnly
-              variant="solid"
-              size="sm"
-              className="bg-gray-50 border-none"
-            >
-              {isSeen}
-            </Button>
-          </div>
-        </div>
-        <Button
-          disableAnimation
-          disableRipple
-          variant="flat"
-          className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
-        >
-          Add To Cart
-        </Button>
-      </CardBody>
-
-      <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
-        <div className="flex flex-col space-y-2">
-          <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
-          <div className="flex space-x-2">
-            <h4 className="text-base font-medium text-red-500 ">
-              $ {item.price}
-            </h4>
-            {item?.discount && (
-              <h4 className="text-base font-medium text-gray-400 line-through">
-                $ {item.discount}
+        <CardFooter as={Link} href={`${item.path}/${item.name}/${item.ID}`}>
+          <div className="flex flex-col space-y-2">
+            <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
+            <div className="flex space-x-2">
+              <h4 className="text-base font-medium text-red-500 ">
+                $ {item.price}
               </h4>
-            )}
-          </div>
+              {item?.discount && (
+                <h4 className="text-base font-medium text-gray-400 line-through">
+                  $ {item.discount}
+                </h4>
+              )}
+            </div>
 
-          <span className="flex space-x-1">
-            {item.rating &&
-              Array.from(Array(Math.floor(item.rating))).map((id) => (
-                <IoStar className="text-yellow-500" key={item.ID} />
-              ))}
-          </span>
-        </div>
-      </CardFooter>
-    </Card>
-  );
+            <span className="flex space-x-1">
+              {item.rating &&
+                Array.from(Array(Math.floor(item.rating))).map((id) => (
+                  <IoStar
+                    className="text-yellow-500"
+                    key={item.ID + Math.random()}
+                  />
+                ))}
+            </span>
+          </div>
+        </CardFooter>
+      </Card>
+    );
+  };
 
   return (
     <div className="w-full flex flex-col justify-center space-y-4  mx-auto pt-16">
@@ -764,8 +825,8 @@ const BestSellingComponent = ({
         className="flex items-stretch
       overflow-x-auto relative space-x-4  p-1 w-full scrollbar-hide"
       >
-        {bestSelling.map((item: ProductType, _) => (
-          <RenderBestSellingItem item={item} key={item.ID} />
+        {bestSelling.map((item: ProductType, i) => (
+          <RenderBestSellingItem item={item} key={item.ID + `${i}`} />
         ))}
       </div>
     </div>
@@ -815,92 +876,125 @@ const ProductsComponent = ({
   products: ProductType[];
   isSeen: React.ReactNode;
 }) => {
-  const ProductItem = ({ item }: { item: ProductType }) => (
-    <Card
-      shadow="none"
-      className="p-0 max-w-sm min-w-sm w-auto h-full relative"
-    >
-      <CardBody className="p-0 bg-gray-200 h-40 relative rounded-b-lg">
-        <div className="relative w-full h-full py-6 flex items-center justify-center">
-          {item?.isNew && (
+  const {
+    addOrRemoveProdFromWishList,
+    isOnWishList,
+    addToCart,
+    isProdOnCart,
+    removeFromCart,
+  } = useContext(AppContext);
+
+  const ProductItem = ({ item }: { item: ProductType }) => {
+    return (
+      <Card
+        shadow="none"
+        className="p-0 max-w-sm min-w-sm w-auto h-full relative"
+      >
+        <CardBody className="p-0 bg-gray-200 h-40 relative rounded-b-lg">
+          <div className="relative w-full h-full py-6 flex items-center justify-center">
+            {item?.isNew && (
+              <Button
+                disableAnimation
+                size="sm"
+                variant="faded"
+                radius="sm"
+                className="absolute border-none left-4 top-4 w-4 bg-green-500 text-xs text-gray-50"
+              >
+                New
+              </Button>
+            )}
+
+            <Image
+              src={item.images[0]}
+              alt={item.name}
+              className="max-w-sm w-auto h-3/5"
+              priority={true}
+            />
+            <div className="absolute top-4 right-2 flex flex-col space-y-1">
+              <Button
+                disableAnimation
+                isIconOnly
+                size="sm"
+                variant="solid"
+                className="bg-gray-50 border-none"
+                radius="full"
+                onClick={() => addOrRemoveProdFromWishList(item.ID)}
+              >
+                {isOnWishList(item.ID) ? (
+                  <IoHeart className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
+                ) : (
+                  <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                )}
+              </Button>
+              <Button
+                disableAnimation
+                radius="full"
+                isIconOnly
+                variant="solid"
+                size="sm"
+                className="bg-gray-50 border-none"
+              >
+                {isSeen}
+              </Button>
+            </div>
+          </div>
+          {isProdOnCart(item.ID) ? (
             <Button
+              onClick={() => removeFromCart(item.ID)}
               disableAnimation
-              size="sm"
-              variant="faded"
-              radius="sm"
-              className="absolute border-none left-4 top-4 w-4 bg-green-500 text-xs text-gray-50"
+              disableRipple
+              variant="flat"
+              className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
             >
-              New
+              REMOVE FROM CART
+            </Button>
+          ) : (
+            <Button
+              onClick={() => addToCart(item.ID)}
+              disableAnimation
+              disableRipple
+              variant="flat"
+              className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+            >
+              ADD TO CART
             </Button>
           )}
+        </CardBody>
 
-          <Image
-            src={item.images[0]}
-            alt={item.name}
-            className="max-w-sm w-auto h-3/5"
-            priority={true}
-          />
-          <div className="absolute top-4 right-2 flex flex-col space-y-1">
-            <Button
-              disableAnimation
-              isIconOnly
-              size="sm"
-              variant="solid"
-              className="bg-gray-50 border-none"
-              radius="full"
-            >
-              <IoHeartOutline className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
-            </Button>
-            <Button
-              disableAnimation
-              radius="full"
-              isIconOnly
-              variant="solid"
-              size="sm"
-              className="bg-gray-50 border-none"
-            >
-              {isSeen}
-            </Button>
-          </div>
-        </div>
-        <Button
-          disableAnimation
-          className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
-        >
-          Add To Cart
-        </Button>
-      </CardBody>
-
-      <CardFooter as={Link} href={`${item.path}/${item.ID}`}>
-        <div className="flex flex-col space-y-2">
-          <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
-          <div className="flex space-x-2">
-            <h4 className="text-base font-medium text-red-500 ">
-              $ {item.price}
-            </h4>
-            {item?.prevPrice && (
-              <h4 className="text-base font-medium text-gray-400 line-through">
-                $ {item.prevPrice}
+        <CardFooter as={Link} href={`${item.path}/${item.name}/${item.ID}`}>
+          <div className="flex flex-col space-y-2">
+            <h2 className="text-gray-800 font-medium text-base">{item.name}</h2>
+            <div className="flex space-x-2">
+              <h4 className="text-base font-medium text-red-500 ">
+                $ {item.price}
               </h4>
-            )}
+              {item?.prevPrice && (
+                <h4 className="text-base font-medium text-gray-400 line-through">
+                  $ {item.prevPrice}
+                </h4>
+              )}
+            </div>
+            <div className="flex space-x-2">
+              <span className="flex space-x-1">
+                {item.rating &&
+                  Array.from(Array(Math.floor(item.rating))).map((id) => (
+                    <IoStar
+                      className="text-yellow-500"
+                      key={item.ID + Math.random()}
+                    />
+                  ))}
+              </span>
+              {item?.ratersCount && (
+                <h4 className="text-base font-medium text-gray-400">
+                  ({item.ratersCount})
+                </h4>
+              )}
+            </div>
           </div>
-          <div className="flex space-x-2">
-            <span className="flex space-x-1">
-              {item.rating &&
-                Array.from(Array(Math.floor(item.rating))).map((id) => (
-                  <IoStar className="text-yellow-500" key={item.ID} />
-                ))}
-            </span>
-            {item?.ratersCount && (
-              <h4 className="text-base font-medium text-gray-400">
-                ({item.ratersCount})
-              </h4>
-            )}
-          </div>
-        </div>
-      </CardFooter>
-    </Card>
-  );
+        </CardFooter>
+      </Card>
+    );
+  };
 
   return (
     <div className="space-y-4 px-2 w-full border-b border-gray-200 pb-8">
@@ -950,8 +1044,8 @@ const ProductsComponent = ({
 
         {/* items */}
         <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-4 mb-6">
-          {products.map((item: ProductType, _) => (
-            <ProductItem item={item} key={item.ID} />
+          {products.map((item: ProductType, i) => (
+            <ProductItem item={item} key={item.ID + `${i}`} />
           ))}
         </div>
         <div />

@@ -27,6 +27,7 @@ export type ItemTotalType = {
   productId: string;
   total: number;
 };
+
 export type ProductType = {
   ID: string;
   name: string;
@@ -95,6 +96,11 @@ export interface AppContextInterface {
   setAuthenticated: (arg: boolean) => any;
   login: LoginType;
   setLogin: (arg: boolean) => void;
+  addOrRemoveProdFromWishList: any;
+  isOnWishList: (arg: string) => string;
+  addToCart: (arg: string) => any;
+  removeFromCart: (arg: string) => any;
+  isProdOnCart: (arg: string) => any;
 }
 
 export type LoginType = {
