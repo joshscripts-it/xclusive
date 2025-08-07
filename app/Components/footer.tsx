@@ -15,8 +15,8 @@ export const Footer = () => {
     <div className="min-w-full w-full bg-slate-900 flex flex-col items-center min-h-80 h-full p-8">
       <div className="container grid grid-flow-row grid-rows-4 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:grid-rows-2 lg:grid-rows-2  xl:grid-rows-1 mx-auto">
         <div>
-          <h2 className="tex-xl mb-2 text-center font-medium text-gray-100 md:text-2xl">
-            Xclusive
+          <h2 className="tex-xl mb-2 text-center font-bold text-gray-100 md:text-2xl">
+            ShopEssential
           </h2>
 
           <div className="flex flex-col items-center">
@@ -55,7 +55,7 @@ export const Footer = () => {
           </div>
           <div>
             <p className="text-center mb-1 text-gray-300 text-sm lg:text-base">
-              xclusive-cart@gmail.com
+              shopEssential@gmail.com
             </p>
             <p className="text-center mb-1 text-gray-300 text-sm lg:text-base">
               +88015-88888-9999
@@ -201,7 +201,7 @@ export const Footer = () => {
       <div className="w-full border-t border-t-slate-500 mt-4" />
       <div className="mt-6">
         <h4 className="text-gray-400 text-sm text-center">
-          &copy;Copyright Xclusive-cart 2023. All right reserved.
+          &copy;Copyright shopEssential 2025. All right reserved.
         </h4>
       </div>
     </div>

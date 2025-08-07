@@ -41,6 +41,7 @@ import {
   IoFitnessOutline,
   IoColorWandOutline,
   IoHeart,
+  IoCartSharp,
 } from "react-icons/io5";
 
 import {
@@ -482,6 +483,7 @@ const FlashSalesComponent = ({
               className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
               onClick={() => removeFromCart(item.ID)}
             >
+              <IoCartSharp className="w-5 h-5 text-gray-700" />
               REMOVE FROM CART
             </Button>
           ) : (
@@ -491,6 +493,7 @@ const FlashSalesComponent = ({
               className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
               onClick={() => addToCart(item.ID)}
             >
+              <IoCartSharp className="w-5 h-5 text-gray-50" />
               ADD TO CART
             </Button>
           )}
@@ -749,6 +752,7 @@ const BestSellingComponent = ({
               variant="flat"
               className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
             >
+              <IoCartSharp className="w-5 h-5 text-gray-700" />
               REMOVE FROM CART
             </Button>
           ) : (
@@ -759,6 +763,7 @@ const BestSellingComponent = ({
               variant="flat"
               className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
             >
+              <IoCartSharp className="w-5 h-5 text-gray-50" />
               ADD TO CART
             </Button>
           )}
@@ -946,6 +951,7 @@ const ProductsComponent = ({
               variant="flat"
               className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
             >
+              <IoCartSharp className="w-5 h-5 text-gray-700" />
               REMOVE FROM CART
             </Button>
           ) : (
@@ -956,6 +962,7 @@ const ProductsComponent = ({
               variant="flat"
               className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
             >
+              <IoCartSharp className="w-5 h-5 text-gray-50" />
               ADD TO CART
             </Button>
           )}

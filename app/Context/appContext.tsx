@@ -26,6 +26,9 @@ export const AppContextProvider = (props: any) => {
              APP  GLOB STATE
     ===========================================*/
   const [cart, setCart] = useState<string[]>([...Cart]);
+  const [cartQuantities, setCartQuantities] = useState<{
+    [key: string]: number;
+  }>({});
   const [bestSelling, setBestSelling] = useState<ProductType[]>([
     ...Bestselling,
   ]);
@@ -40,21 +43,21 @@ export const AppContextProvider = (props: any) => {
   const [login, setLogin] = useState<LoginType>({ isLogin: false });
   const [user, setUser] = useState<UserType>({ email: "", password: "" });
 
-  //Handle login
+  //@handle user login
   const handleLogin = (login: UserType) => {
     const loginUser = DummyUsers.filter((user) => user.ID === login.ID);
   };
 
-  //check if certain product exist on wishlist
+  //@check if certain product exist on wishlist
   const isProdOnCart = (prodID: string) => {
     return cart?.find((i: string) => i == prodID);
   };
   // @add item/prod. to cart
   const addToCart = (prodID: string) => {
-    // make sure same item/product dont repeat on cart
+    // @make sure same item/product dont repeat on cart
     const itemsOnCart = new Set(cart);
 
-    // check if item/prod. already on cart
+    // @check if item/prod. already on cart
     const isOnCart = Array.from(itemsOnCart).find((i) => i == prodID);
     if (isOnCart) {
       console.log("Item already on cart!");
@@ -62,21 +65,55 @@ export const AppContextProvider = (props: any) => {
     }
 
     itemsOnCart.add(prodID);
+    setCartQuantities((prev) => ({ ...prev, [prodID]: 1 }));
     console.log(`Product with the ID: ${prodID} added to Cart!`);
     return setCart(Array.from(itemsOnCart));
   };
 
-  // @add item/prod. to cart
+  // @increment quantity of product in cart
+  const incrementCartQuantity = (prodID: string) => {
+    if (isProdOnCart(prodID)) {
+      setCartQuantities((prev) => ({
+        ...prev,
+        [prodID]: (prev[prodID] || 1) + 1,
+      }));
+    } else {
+      addToCart(prodID);
+    }
+  };
+
+  // @decrement quantity of product in cart
+  const decrementCartQuantity = (prodID: string) => {
+    if (isProdOnCart(prodID)) {
+      setCartQuantities((prev) => {
+        const currentQty = prev[prodID] || 1;
+        if (currentQty <= 1) {
+          removeFromCart(prodID);
+          const { [prodID]: removed, ...rest } = prev;
+          return rest;
+        }
+
+        return {
+          ...prev,
+          [prodID]: currentQty - 1,
+        };
+      });
+    }
+  };
+
+  // @remove item/prod. from cart
   const removeFromCart = (prodID: string) => {
     // make sure same item/product dont repeat on cart
     const itemsOnCart = new Set(cart);
-
     // check if item/prod. already on cart
     const isOnCart = Array.from(itemsOnCart).find((i) => i == prodID);
     if (isOnCart) {
-      console.log("Item already on cart!");
+      console.log("Item removed from cart!");
       itemsOnCart.delete(prodID);
-
+      setCartQuantities((prev) => {
+        const { [prodID]: removed, ...rest } = prev;
+        return rest;
+      });
       return setCart(Array.from(itemsOnCart));
     }
   };
@@ -119,6 +156,7 @@ export const AppContextProvider = (props: any) => {
         setUser,
         cart,
         setCart,
+        cartQuantities,
         wishList,
         login,
         setLogin,
@@ -127,6 +165,8 @@ export const AppContextProvider = (props: any) => {
         addToCart,
         removeFromCart,
         isProdOnCart,
+        incrementCartQuantity,
+        decrementCartQuantity,
       }}
       {...props}
     />

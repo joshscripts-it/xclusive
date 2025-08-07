@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import { AppContext } from "../Context/appContext";
 import {
+  IoCartSharp,
   IoEyeOffOutline,
   IoEyeOutline,
   IoHeart,
@@ -14,6 +15,7 @@ import {
 } from "react-icons/io5";
 import { ProductType } from "@/type.d";
 import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
+import { AnimatePresence, motion } from "motion/react";
 
 const WishListItem = ({ item }: { item: ProductType }) => {
   const {
@@ -76,6 +78,7 @@ const WishListItem = ({ item }: { item: ProductType }) => {
             variant="flat"
             className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
           >
+            <IoCartSharp className="w-5 h-5 text-gray-700" />
             REMOVE FROM CART
           </Button>
         ) : (
@@ -86,6 +89,7 @@ const WishListItem = ({ item }: { item: ProductType }) => {
             variant="flat"
             className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
           >
+            <IoCartSharp className="w-5 h-5 text-gray-50" />
             ADD TO CART
           </Button>
         )}
@@ -202,6 +206,7 @@ const JustForYouComponent = ({
             variant="flat"
             className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
           >
+            <IoCartSharp className="w-5 h-5 text-gray-700" />
             REMOVE FROM CART
           </Button>
         ) : (
@@ -212,6 +217,7 @@ const JustForYouComponent = ({
             variant="flat"
             className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
           >
+            <IoCartSharp className="w-5 h-5 text-gray-50" />
             ADD TO CART
           </Button>
         )}
@@ -256,7 +262,9 @@ export default function Page() {
   if (wishList?.length && products?.length) {
     for (let i in wishList) {
       // newWishList.push(products[i].ID == wishList[i]);
-      let found = products.filter((product) => product?.ID == wishList[i]);
+      let found = products.filter(
+        (product: ProductType) => product?.ID == wishList[i]
+      );
 
       newWishList.push(...found);
     }

@@ -26,6 +26,7 @@ export type CartItemType = {
 export type ItemTotalType = {
   productId: string;
   total: number;
+  qtty: number;
 };
 
 export type ProductType = {
@@ -42,7 +43,7 @@ export type ProductType = {
   colors?: string[];
   sizes?: string[];
   ratersCount?: number;
-  quantity?: number;
+  qtty?: number;
   inStock?: boolean;
 };
 
@@ -91,6 +92,7 @@ export interface AppContextInterface {
   bestSelling: [];
   wishList?: [];
   cart?: [];
+  cartQuantities: {[key: string]: number};
   setCart: (arg: number) => number;
   setUser: (arg: UserType) => any;
   setAuthenticated: (arg: boolean) => any;
@@ -101,6 +103,8 @@ export interface AppContextInterface {
   addToCart: (arg: string) => any;
   removeFromCart: (arg: string) => any;
   isProdOnCart: (arg: string) => any;
+  incrementCartQuantity: (arg: string) => void;
+  decrementCartQuantity: (arg: string) => void;
 }
 
 export type LoginType = {

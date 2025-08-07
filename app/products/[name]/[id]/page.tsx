@@ -7,6 +7,7 @@ import { AllProducts } from "@/data/dummyData";
 import Image from "next/image";
 import {
   IoAddOutline,
+  IoCartSharp,
   IoEyeOffOutline,
   IoEyeOutline,
   IoHeart,
@@ -32,6 +33,7 @@ import {
   CardBody,
   CardFooter,
 } from "@nextui-org/react";
+import { redirect, useRouter } from "next/navigation";
 
 const RelatedItemsComponent = ({
   item,
@@ -115,6 +117,7 @@ const RelatedItemsComponent = ({
             variant="flat"
             className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-800 bg-[#ffe712]"
           >
+            <IoCartSharp className="w-5 h-5 text-gray-700" />
             REMOVE FROM CART
           </Button>
         ) : (
@@ -125,6 +128,7 @@ const RelatedItemsComponent = ({
             variant="flat"
             className="absolute w-full rounded-t-none rounded-b-lg bottom-0 text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
           >
+            <IoCartSharp className="w-5 h-5 text-gray-50" />
             ADD TO CART
           </Button>
         )}
@@ -163,6 +167,7 @@ export default function ProductDetails({ params: { id } }: PageProps) {
   //INTERNAL STATE
   const [visible, setVisible] = useState<Boolean>(true);
   const [selectedIndex, setSelectedIndex] = useState(2);
+  const router = useRouter();
 
   const { addOrRemoveProdFromWishList, isOnWishList } = useContext(AppContext);
 
@@ -194,9 +199,28 @@ export default function ProductDetails({ params: { id } }: PageProps) {
     emblaMainApi.on("reInit", onSelect);
   }, [emblaMainApi, onSelect]);
 
-  const { shopList } = useContext(AppContext);
+  const {
+    shopList,
+    incrementCartQuantity,
+    decrementCartQuantity,
+    cartQuantities,
+    isProdOnCart,
+    addToCart,
+  } = useContext(AppContext);
 
   const isMatch = AllProducts.filter((product) => product.ID == id);
+  //@handle product purchases
+  const buyNow = (productId: string) => {
+    //check if product is on cart
+    if (!isProdOnCart(productId)) {
+      //add product to cart
+      addToCart(productId);
+      //@then redirect user to cart page
+      router.push("/cart");
+    } else {
+      router.push("/cart");
+    }
+  };
 
   const images: string[] = [];
   isMatch[0]?.images.forEach((img: any) => images.push(img));
@@ -325,19 +349,39 @@ export default function ProductDetails({ params: { id } }: PageProps) {
               </div>
 
               <div className="flex space-x-6 items-stretch">
-                <div className="basis-2/5 flex items-stretch border border-gray-300 divide-x rounded-md">
-                  <button className="basis-2/6 p-2 text-center flex items-center justify-center">
-                    <IoRemoveOutline className="w-5 h-5 text-gray-600" />
-                  </button>
-                  <button className="basis-4/6 p-2 text-gray-500 text-lg font-medium">
-                    2
-                  </button>
-                  <button className="basis-2/6 bg-red-500 rounded-e-md p-2 flex items-center justify-center">
-                    <IoAddOutline className="w-5 h-5 text-gray-50" />
-                  </button>
-                </div>
+                {isProdOnCart(isMatch[0].ID) ? (
+                  <div className="basis-2/5 flex items-stretch border border-gray-300 divide-x rounded-md">
+                    <button
+                      className="basis-2/6 p-2 text-center flex items-center justify-center"
+                      onClick={() => decrementCartQuantity(isMatch[0].ID)}
+                    >
+                      <IoRemoveOutline className="w-5 h-5 text-gray-600" />
+                    </button>
+                    <button className="basis-4/6 p-2 text-gray-500 text-lg font-medium">
+                      {cartQuantities[isMatch[0].ID] || 0}
+                    </button>
+                    <button
+                      className="basis-2/6 bg-red-500 rounded-e-md p-2 flex items-center justify-center"
+                      onClick={() => incrementCartQuantity(isMatch[0].ID)}
+                    >
+                      <IoAddOutline className="w-5 h-5 text-gray-50" />
+                    </button>
+                  </div>
+                ) : (
+                  <Button
+                    onClick={() => addToCart(isMatch[0].ID)}
+                    disableAnimation
+                    disableRipple
+                    variant="flat"
+                    className="basis-2/5 rounded-md text-sm lg:text-base  text-center text-gray-100 bg-gray-800"
+                  >
+                    <IoCartSharp className="w-5 h-5 text-gray-50" />
+                    ADD TO CART
+                  </Button>
+                )}
 
                 <Button
+                  onClick={() => buyNow(isMatch[0].ID)}
                   disableAnimation
                   className="basis-2/4 bg-red-500 p-2 rounded-md text-gray-100 text-base font-medium"
                 >

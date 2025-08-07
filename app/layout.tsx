@@ -6,7 +6,7 @@ import { Footer } from "./Components/footer";
 import { TopBarComponent } from "./Components/topBar";
 import { Providers } from "./Providers";
 
-// const raleway = Raleway({ subsets: ["latin"] });
+// Temporarily disable Google Fonts for deployment
 const poppins = Poppins({
   subsets: ["devanagari"],
   weight: ["200", "400", "500", "600", "700", "800"],

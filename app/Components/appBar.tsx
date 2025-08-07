@@ -45,7 +45,7 @@ export const AppbarComponent = () => {
     >
       <NavbarBrand>
         <Link href="/" className="font-bold text-center text-xl lg:text-2xl">
-          Xclusive
+          shopEssential
         </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4 flex-1" justify="center">

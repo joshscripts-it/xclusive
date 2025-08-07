@@ -1,7 +1,7 @@
 export default function Head() {
   return (
     <>
-      <title>Xclusive-cart | Cart</title>
+      <title>Xclusive | Cart</title>
     </>
   );
 }
