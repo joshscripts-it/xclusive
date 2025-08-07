@@ -1,16 +1,16 @@
 import "./globals.css";
 
-import { Poppins } from "next/font/google";
+// import { Poppins } from "next/font/google";
 import { AppbarComponent } from "./Components/appBar";
 import { Footer } from "./Components/footer";
 import { TopBarComponent } from "./Components/topBar";
 import { Providers } from "./Providers";
 
-// Temporarily disable Google Fonts for deployment
-const poppins = Poppins({
-  subsets: ["devanagari"],
-  weight: ["200", "400", "500", "600", "700", "800"],
-});
+
+// const poppins = Poppins({
+//   subsets: ["devanagari"],
+//   weight: ["200", "400", "500", "600", "700", "800"],
+// });
 
 export default function RootLayout({
   children,
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${poppins.className}`}>
+    <html lang="en">
       <body>
         <Providers>
           <TopBarComponent />

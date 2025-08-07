@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { AppContext } from "../Context/appContext";
 import Image from "next/image";
 import { IoAdd, IoCheckmarkDoneCircleOutline, IoRemove } from "react-icons/io5";
@@ -31,6 +31,7 @@ export default function Page() {
     incrementCartQuantity,
     decrementCartQuantity,
   } = useContext(AppContext);
+
   const cartList: ProductType[] = [];
 
   const handleApplyCoupon = () => {

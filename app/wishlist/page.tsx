@@ -15,7 +15,6 @@ import {
 } from "react-icons/io5";
 import { ProductType } from "@/type.d";
 import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
-import { AnimatePresence, motion } from "motion/react";
 
 const WishListItem = ({ item }: { item: ProductType }) => {
   const {
@@ -261,7 +260,7 @@ export default function Page() {
 
   if (wishList?.length && products?.length) {
     for (let i in wishList) {
-      // newWishList.push(products[i].ID == wishList[i]);
+      // newWishList.push(products[i]?.ID == wishList[i]);
       let found = products.filter(
         (product: ProductType) => product?.ID == wishList[i]
       );
